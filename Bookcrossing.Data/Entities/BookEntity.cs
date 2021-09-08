@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Bookcrossing.Entities
+namespace Bookcrossing.Data.Entities
 {
     public class BookEntity
     {
