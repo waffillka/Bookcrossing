@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bookcrossing.Data.Entities
 {
@@ -17,15 +18,17 @@ namespace Bookcrossing.Data.Entities
 
         public ICollection<Author>? Authors { get; set; }
 
-        public Guid IdPulisher { get; set; }
+        public Guid PublisherId { get; set; }
         public Publisher? Publisher { get; set; }
 
-        public int IdOwner { get; set; }
-        public User? Owner { get; set; }
+        public int OwnerId { get; set; }
+        public User Owner { get; set; }
 
-        public int IdRecipient { get; set; }
-        public User? Recipient { get; set; }
-        public bool Free { get; set; } = true;
+        public int? RecipientId { get; set; }
+        public User Recipient { get; set; }
+
+        [NotMapped]
+        public bool Free => RecipientId == null;
 
     }
 }

@@ -7,8 +7,13 @@ namespace Bookcrossing.Data.Entities
     {
         [Required]
         public Guid Id { get; set; }
-        public int idUser { get; set; }
+
+        public int UserId { get; set; }
         public User? User { get; set; }
+
+        public Guid BookId { get; set; }
+        public Book Book { get; set; }
+
         public DateTime DateOfReceiving { get; set; }
         public DateTime? DateOfDelivery { get; set; }
     }
