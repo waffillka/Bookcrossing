@@ -20,10 +20,10 @@ namespace Bookcrossing.Data.Entities
         public Guid IdPulisher { get; set; }
         public Publisher? Publisher { get; set; }
 
-        //public Guid IdOwner { get; set; }
+        public int IdOwner { get; set; }
         public User? Owner { get; set; }
 
-        //public Guid IdRecipient { get; set; }
+        public int IdRecipient { get; set; }
         public User? Recipient { get; set; }
         public bool Free { get; set; } = true;
 
