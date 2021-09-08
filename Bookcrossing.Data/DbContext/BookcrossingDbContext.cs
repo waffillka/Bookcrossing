@@ -1,10 +1,9 @@
 ﻿using Bookcrossing.Data.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookcrossing.Data.DbContext
 {
-    public class BookcrossingDbContext : IdentityDbContext<User>
+    public class BookcrossingDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public BookcrossingDbContext(DbContextOptions options)
             : base(options)
