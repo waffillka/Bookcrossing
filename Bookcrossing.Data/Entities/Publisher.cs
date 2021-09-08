@@ -4,11 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookcrossing.Data.Entities
 {
-    public class Publisher
+    public class Publisher : EntityBase
     {
-        [Required]
-        public Guid Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 

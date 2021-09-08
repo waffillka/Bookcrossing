@@ -5,10 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bookcrossing.Data.Entities
 {
-    public class Book
+    public class Book : EntityBase
     {
-        [Required]
-        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
@@ -21,10 +19,10 @@ namespace Bookcrossing.Data.Entities
         public Guid PublisherId { get; set; }
         public Publisher? Publisher { get; set; }
 
-        public int OwnerId { get; set; }
+        public Guid OwnerId { get; set; }
         public User Owner { get; set; }
 
-        public int? RecipientId { get; set; }
+        public Guid? RecipientId { get; set; }
         public User Recipient { get; set; }
 
         [NotMapped]

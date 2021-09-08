@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace Bookcrossing.Data.Entities
 {
-    public class User
+    public class User : EntityBase
     {
-        public int Id { get; set; }
         public string Nickname { get; set; }
 
         public ICollection<Book> OwnerBook { get; set; }

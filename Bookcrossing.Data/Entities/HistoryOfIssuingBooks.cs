@@ -3,12 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookcrossing.Data.Entities
 {
-    public class HistoryOfIssuingBooks
+    public class HistoryOfIssuingBooks : EntityBase
     {
-        [Required]
-        public Guid Id { get; set; }
-
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public User? User { get; set; }
 
         public Guid BookId { get; set; }

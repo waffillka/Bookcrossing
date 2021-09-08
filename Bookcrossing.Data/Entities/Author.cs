@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookcrossing.Data.Entities
 {
-    public class Author
+    public class Author : EntityBase
     {
-        [Required]
-        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
         public DateTime Birthday { get; set; }
