@@ -16,5 +16,10 @@ namespace Bookcrossing.Data.Repositories
         {
 
         }
+
+        public Task<IQueryable<HistoryOfIssuingBooks>> GetByBook(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
