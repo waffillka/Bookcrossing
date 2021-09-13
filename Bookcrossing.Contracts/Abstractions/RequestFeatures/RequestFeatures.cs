@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bookcrossing.Contracts.Abstractions.RequestFeatures
+﻿namespace Bookcrossing.Contracts.Abstractions.RequestFeatures
 {
     public abstract class RequestFeatures
     {
