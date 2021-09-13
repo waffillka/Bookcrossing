@@ -10,6 +10,11 @@ namespace Bookcrossing.Data.DbContext
         {
         }
 
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<HistoryOfIssuingBooks> HistoryOfIssuingBooks { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -21,11 +26,5 @@ namespace Bookcrossing.Data.DbContext
                 .HasOne(c => c.Recipient)
                 .WithMany(o => o.BookRecipient);
         }
-
-        public DbSet<Book> Books { get; set; }
-        public DbSet<Author> Authors { get; set; }
-        public DbSet<Publisher> Publishers { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<HistoryOfIssuingBooks> HistoryOfIssuingBooks { get; set; }
     }
 }
