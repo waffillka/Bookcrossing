@@ -16,11 +16,11 @@ namespace Bookcrossing.Data.Repositories
 
         }
 
-        public async Task<IQueryable<Publisher>> GetAsync(AuthorPublisherParams parametrs, CancellationToken ct = default)
+        public async Task<IQueryable<Publisher>> GetAsync(AuthorPublisherParams parameters, CancellationToken ct = default)
         {
-            var entities = _dbContext.Publishers.Where(x => x.Name.Contains(parametrs.MatchString));
+            var entities = _dbContext.Publishers.Where(x => x.Name.Contains(parameters.MatchString));
 
-            if (parametrs.OrderyBy == "abc")
+            if (parameters.OrderyBy == "abc")
             {
                 entities.OrderBy(x => x.Name);
             }
@@ -29,7 +29,8 @@ namespace Bookcrossing.Data.Repositories
                 entities.OrderByDescending(x => x.Name);
             }
 
-            return entities;
+            return entities.Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                .Take(parameters.PageSize); ;
         }
     }
 }
