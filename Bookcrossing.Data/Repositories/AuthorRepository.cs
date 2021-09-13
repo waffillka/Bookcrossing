@@ -1,7 +1,7 @@
-﻿using Bookcrossing.Data.DbContext;
+﻿using Bookcrossing.Contracts.Abstractions.RequestFeatures;
+using Bookcrossing.Data.DbContext;
 using Bookcrossing.Data.Entities;
 using Bookcrossing.Data.Repositories.Interface;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,21 +11,25 @@ namespace Bookcrossing.Data.Repositories
     public class AuthorRepository : RepositoryBase<Author>, IAuthorRepository
     {
         public AuthorRepository(BookcrossingDbContext dbContext)
-            :base(dbContext)
+            : base(dbContext)
         {
-            
+
         }
 
-        public async Task<Author> GetById(Guid id)
+        public async Task<IQueryable<Author>> GetAsync(AuthorPublisherParams parametrs, CancellationToken ct = default)
         {
-            var entity = _dbContext.Authors.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
-            return entity;
-        }
+            var entities = _dbContext.Authors.Where(x => x.Name.Contains(parametrs.MatchString));
 
-        public async Task<IQueryable<Author>> GetByName(string name)
-        {
-            var authors = _dbContext.Authors.Where(x => x.Name.Contains(name) && !x.IsDeleted);
-            return authors;
+            if (parametrs.OrderyBy == "abc")
+            {
+                entities.OrderBy(x => x.Name);
+            }
+            else
+            {
+                entities.OrderByDescending(x => x.Name);
+            }
+
+            return entities;
         }
     }
 }
