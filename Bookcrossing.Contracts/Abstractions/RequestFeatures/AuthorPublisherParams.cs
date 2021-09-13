@@ -1,8 +1,7 @@
 ﻿namespace Bookcrossing.Contracts.Abstractions.RequestFeatures
 {
-    public class AuthorPublisherParams
+    public class AuthorPublisherParams : RequestFeatures
     {
-        public string OrderyBy { get; set; } = "abc";
         public string MatchString { get; set; }
     }
 }
