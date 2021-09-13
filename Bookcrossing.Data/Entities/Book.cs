@@ -14,7 +14,7 @@ namespace Bookcrossing.Data.Entities
         [MaxLength(17)]
         public string ISBIN { get; set; }
 
-        public ICollection<Author>? Authors { get; set; }
+        public ICollection<Author> Authors { get; set; }
 
         public Guid PublisherId { get; set; }
         public Publisher? Publisher { get; set; }
