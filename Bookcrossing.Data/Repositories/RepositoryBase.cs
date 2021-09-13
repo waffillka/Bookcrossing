@@ -5,6 +5,7 @@ using Bookcrossing.Data.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -63,7 +64,7 @@ namespace Bookcrossing.Data.Repositories
             return entity.Result;
         }
 
-        public async Task<IQueryable<TEntity>> GetAsync(RequestFeatures pagination)
+        public virtual async Task<IQueryable<TEntity>> GetAsync(RequestFeatures pagination, CancellationToken ct = default)
         {
             var entities = _dbContext.Set<TEntity>().Skip((pagination.PageNumber - 1) * pagination.PageSize).Take(pagination.PageSize);
             return entities;
@@ -85,5 +86,14 @@ namespace Bookcrossing.Data.Repositories
             var entity = _dbContext.Set<TEntity>().Update(entityToUpdate);
             return entity.Entity;
         }
+
+        public async Task<IQueryable<TEntity>> GetByCondition(Expression<Func<TEntity, bool>> expression, RequestFeatures parameters, CancellationToken ct = default) =>
+            _dbContext.Set<TEntity>()
+                .Where(expression)
+                .Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                .Take(parameters.PageSize);
+
+        public async Task<TEntity> GetOneByCondition(Expression<Func<TEntity, bool>> expression, CancellationToken ct = default) =>
+            _dbContext.Set<TEntity>().FirstOrDefaultAsync(expression, ct).Result;
     }
 }
