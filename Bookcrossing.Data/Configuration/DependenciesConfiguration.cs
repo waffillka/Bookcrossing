@@ -11,7 +11,8 @@ namespace Bookcrossing.Data.Configuration
         public static IServiceCollection ConfigureSqlContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<BookcrossingDbContext>(opts =>
-                opts.UseSqlServer(connectionString, b => b.MigrationsAssembly("Bookcrossing.Data")));
+                opts.UseLazyLoadingProxies()
+                .UseSqlServer(connectionString, b => b.MigrationsAssembly("Bookcrossing.Data")));
 
             return services;
         }

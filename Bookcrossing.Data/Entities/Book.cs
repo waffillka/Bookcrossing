@@ -14,16 +14,16 @@ namespace Bookcrossing.Data.Entities
         [MaxLength(17)]
         public string ISBIN { get; set; }
 
-        public ICollection<Author> Authors { get; set; }
+        public virtual ICollection<Author> Authors { get; set; }
 
         public Guid PublisherId { get; set; }
-        public Publisher? Publisher { get; set; }
+        public virtual Publisher? Publisher { get; set; }
 
         public Guid OwnerId { get; set; }
-        public User Owner { get; set; }
+        public virtual User Owner { get; set; }
 
         public Guid? RecipientId { get; set; }
-        public User Recipient { get; set; }
+        public virtual User Recipient { get; set; }
 
         [NotMapped]
         public bool Free => RecipientId == null;
