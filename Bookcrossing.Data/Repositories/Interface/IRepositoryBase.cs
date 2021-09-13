@@ -13,7 +13,9 @@ namespace Bookcrossing.Data.Repositories.Interface
         Task<TEntity> GetAsync(Guid id, CancellationToken ct = default);
         Task<IQueryable<TEntity>> GetAsync(RequestFeatures pagination);
         Task<TEntity> InsertAsync(TEntity newEntity, CancellationToken ct = default);
+        Task InsertAsync(TEntity[] newEntity, CancellationToken ct = default);
         TEntity Update(TEntity entityToUpdate);
-        Task DeleteAsync(TEntity entityToRemove);
+        Task Delete(TEntity entityToRemove, bool hard, CancellationToken ct = default);
+        Task Delete(TEntity[] entityToRemove, bool hard, CancellationToken ct = default);
     }
 }

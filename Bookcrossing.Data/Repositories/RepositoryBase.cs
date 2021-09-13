@@ -20,9 +20,41 @@ namespace Bookcrossing.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task DeleteAsync(TEntity entityToRemove)
+        public async Task Delete(TEntity entityToRemove, bool hard, CancellationToken ct = default)
         {
-            _dbContext.Set<TEntity>().Remove(entityToRemove);
+            if (hard)
+            {
+                _dbContext.Set<TEntity>().Remove(entityToRemove);
+            }
+            else
+            {
+                if (_dbContext.Entry(entityToRemove).State == EntityState.Detached)
+                {
+                    _dbContext.Set<TEntity>().Attach(entityToRemove);
+                }
+
+                entityToRemove.IsDeleted = true;
+            }
+        }
+
+        public async Task Delete(TEntity[] entitiesToRemove, bool hard, CancellationToken ct = default)
+        {
+            if (hard)
+            {
+                _dbContext.Set<TEntity>().RemoveRange(entitiesToRemove);
+            }
+            else
+            {
+                foreach (var item in entitiesToRemove)
+                {
+                    if (_dbContext.Entry(item).State == EntityState.Detached)
+                    {
+                        _dbContext.Set<TEntity>().Attach(item);
+                    }
+
+                    item.IsDeleted = true;
+                }
+            }
         }
 
         public async Task<TEntity> GetAsync(Guid id, CancellationToken ct = default)
@@ -41,6 +73,11 @@ namespace Bookcrossing.Data.Repositories
         {
             var entity = _dbContext.Set<TEntity>().AddAsync(newEntity, ct);
             return entity.Result.Entity;
+        }
+
+        public async Task InsertAsync(TEntity[] newEntity, CancellationToken ct = default)
+        {
+            _dbContext.Set<TEntity>().AddRangeAsync(newEntity, ct);
         }
 
         public TEntity Update(TEntity entityToUpdate)
