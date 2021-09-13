@@ -1,8 +1,10 @@
-﻿using Bookcrossing.Data.DbContext;
+﻿using Bookcrossing.Contracts.Abstractions.RequestFeatures;
+using Bookcrossing.Data.DbContext;
 using Bookcrossing.Data.Entities;
 using Bookcrossing.Data.Repositories.Interface;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Bookcrossing.Data.Repositories
@@ -15,7 +17,7 @@ namespace Bookcrossing.Data.Repositories
 
         }
 
-        public Task<IQueryable<HistoryOfIssuingBooks>> GetByBook(Guid id)
+        public Task<IQueryable<HistoryOfIssuingBooks>> GetAsync(HistoryParams parametrs, CancellationToken ct = default)
         {
             throw new NotImplementedException();
         }
