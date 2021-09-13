@@ -1,8 +1,9 @@
-﻿using Bookcrossing.Data.DbContext;
+﻿using Bookcrossing.Contracts.Abstractions.RequestFeatures;
+using Bookcrossing.Data.DbContext;
 using Bookcrossing.Data.Entities;
 using Bookcrossing.Data.Repositories.Interface;
-using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Bookcrossing.Data.Repositories
@@ -15,16 +16,20 @@ namespace Bookcrossing.Data.Repositories
 
         }
 
-        public async Task<Publisher> GetById(Guid id)
+        public async Task<IQueryable<Publisher>> GetAsync(AuthorPublisherParams parametrs, CancellationToken ct = default)
         {
-            var entity = _dbContext.Publishers.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
-            return entity;
-        }
+            var entities = _dbContext.Publishers.Where(x => x.Name.Contains(parametrs.MatchString));
 
-        public async Task<IQueryable<Publisher>> GetByName(string name)
-        {
-            var authors = _dbContext.Publishers.Where(x => x.Name.Contains(name) && !x.IsDeleted);
-            return authors;
+            if (parametrs.OrderyBy == "abc")
+            {
+                entities.OrderBy(x => x.Name);
+            }
+            else
+            {
+                entities.OrderByDescending(x => x.Name);
+            }
+
+            return entities;
         }
     }
 }
