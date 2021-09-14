@@ -24,7 +24,7 @@ namespace Bookcrossing.Data.Repositories
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            IQueryable<HistoryOfIssuingBooks> entities = _dbContext.HistoryOfIssuingBooks;
+            IQueryable<HistoryOfIssuingBooks> entities = DbContext.HistoryOfIssuingBooks;
 
             if (parameters.From != default)
             {

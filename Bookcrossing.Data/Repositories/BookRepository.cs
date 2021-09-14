@@ -25,7 +25,7 @@ namespace Bookcrossing.Data.Repositories
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            IQueryable<Book> entities = _dbContext.Books;
+            IQueryable<Book> entities = DbContext.Books;
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchString))
             {
@@ -51,7 +51,7 @@ namespace Bookcrossing.Data.Repositories
                 entities = entities.Where(book => parameters.Publishers.Contains(book.Publisher.Name));
             }
 
-            entities = parameters.OrderyBy == Order.Asc ? entities.OrderBy(x => x.Name) : entities.OrderByDescending(x => x.Name);
+            entities = parameters.OrderBy == Order.Asc ? entities.OrderBy(x => x.Name) : entities.OrderByDescending(x => x.Name);
 
             return entities.Skip((parameters.PageNumber - 1) * parameters.PageSize)
                 .Take(parameters.PageSize);

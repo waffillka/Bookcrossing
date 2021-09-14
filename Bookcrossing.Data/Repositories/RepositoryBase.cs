@@ -14,53 +14,58 @@ namespace Bookcrossing.Data.Repositories
     public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
         where TEntity : class, IIdentifiable<Guid>, ISoftDeleteable
     {
-        protected readonly BookcrossingDbContext _dbContext;
+        protected BookcrossingDbContext DbContext { get; }
 
         public RepositoryBase(BookcrossingDbContext dbContext)
         {
-            _dbContext = dbContext;
+            DbContext = dbContext;
         }
 
         public async Task Delete(TEntity entityToRemove, bool hard, CancellationToken ct = default)
         {
             if (hard)
             {
-                _dbContext.Set<TEntity>().Remove(entityToRemove);
+                DbContext.Set<TEntity>().Remove(entityToRemove);
             }
             else
             {
-                if (_dbContext.Entry(entityToRemove).State == EntityState.Detached)
+                if (DbContext.Entry(entityToRemove).State == EntityState.Detached)
                 {
-                    _dbContext.Set<TEntity>().Attach(entityToRemove);
+                    DbContext.Set<TEntity>().Attach(entityToRemove);
                 }
 
                 entityToRemove.IsDeleted = true;
             }
+
+            SaveAsync(ct);
         }
 
         public async Task Delete(TEntity[] entitiesToRemove, bool hard, CancellationToken ct = default)
         {
             if (hard)
             {
-                _dbContext.Set<TEntity>().RemoveRange(entitiesToRemove);
+                DbContext.Set<TEntity>().RemoveRange(entitiesToRemove);
             }
             else
             {
                 foreach (var item in entitiesToRemove)
                 {
-                    if (_dbContext.Entry(item).State == EntityState.Detached)
+                    if (DbContext.Entry(item).State == EntityState.Detached)
                     {
-                        _dbContext.Set<TEntity>().Attach(item);
+                        DbContext.Set<TEntity>().Attach(item);
                     }
 
                     item.IsDeleted = true;
                 }
             }
+
+            SaveAsync(ct);
         }
 
         public async Task<TEntity> GetAsync(Guid id, CancellationToken ct = default)
         {
-            var entity = _dbContext.Set<TEntity>().FindAsync(id, ct);
+            var entity = DbContext.Set<TEntity>().FindAsync(id, ct);
+
             return entity.Result;
         }
 
@@ -71,24 +76,30 @@ namespace Bookcrossing.Data.Repositories
                 throw new ArgumentNullException(nameof(pagination));
             }
 
-            var entities = _dbContext.Set<TEntity>().Skip((pagination.PageNumber - 1) * pagination.PageSize).Take(pagination.PageSize);
+            var entities = DbContext.Set<TEntity>().Skip((pagination.PageNumber - 1) * pagination.PageSize).Take(pagination.PageSize);
+
             return entities;
         }
 
         public async Task<TEntity> InsertAsync(TEntity newEntity, CancellationToken ct = default)
         {
-            var entity = _dbContext.Set<TEntity>().AddAsync(newEntity, ct);
+            var entity = DbContext.Set<TEntity>().AddAsync(newEntity, ct);
+            SaveAsync(ct);
+
             return entity.Result.Entity;
         }
 
         public async Task InsertAsync(TEntity[] newEntity, CancellationToken ct = default)
         {
-            _dbContext.Set<TEntity>().AddRangeAsync(newEntity, ct);
+            DbContext.Set<TEntity>().AddRangeAsync(newEntity, ct);
+            SaveAsync(ct);
         }
 
-        public TEntity Update(TEntity entityToUpdate)
+        public async Task<TEntity> UpdateAsync(TEntity entityToUpdate, CancellationToken ct = default)
         {
-            var entity = _dbContext.Set<TEntity>().Update(entityToUpdate);
+            var entity = DbContext.Set<TEntity>().Update(entityToUpdate);
+            SaveAsync(ct);
+
             return entity.Entity;
         }
 
@@ -99,7 +110,7 @@ namespace Bookcrossing.Data.Repositories
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            return _dbContext.Set<TEntity>()
+            return DbContext.Set<TEntity>()
                 .Where(expression)
                 .Skip((parameters.PageNumber - 1) * parameters.PageSize)
                 .Take(parameters.PageSize);
@@ -107,6 +118,11 @@ namespace Bookcrossing.Data.Repositories
 
 
         public async Task<TEntity> GetOneByCondition(Expression<Func<TEntity, bool>> expression, CancellationToken ct = default) =>
-            _dbContext.Set<TEntity>().FirstOrDefaultAsync(expression, ct).Result;
+            DbContext.Set<TEntity>().FirstOrDefaultAsync(expression, ct).Result;
+
+        public Task<int> SaveAsync(CancellationToken ct = default)
+        {
+            return DbContext.SaveChangesAsync(ct);
+        }
     }
 }

@@ -22,9 +22,7 @@ namespace Bookcrossing.Data.Configuration
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IPublisherRepository, PublisherRepository>();
             services.AddScoped<IHistoryOfIssuingBooksRepository, HistoryOfIssuingBooksRepository>();
-
             services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<IRepositoryManager, RepositoryManager>();
 
             return services;
         }
