@@ -8,5 +8,11 @@ namespace Bookcrossing.Data.Entities
 
         public virtual ICollection<Book> OwnerBook { get; set; }
         public virtual ICollection<Book> BookRecipient { get; set; }
+
+        public User()
+        {
+            OwnerBook = new List<Book>();
+            BookRecipient = new List<Book>();
+        }
     }
 }

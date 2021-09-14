@@ -15,6 +15,7 @@ namespace Bookcrossing.Data.DbContext
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<HistoryOfIssuingBooks> HistoryOfIssuingBooks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

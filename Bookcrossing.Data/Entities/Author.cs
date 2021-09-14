@@ -9,6 +9,11 @@ namespace Bookcrossing.Data.Entities
         [Required]
         public string Name { get; set; }
         public DateTime Birthday { get; set; }
-        public virtual ICollection<Book>? Books { get; set; }
+        public virtual ICollection<Book> Books { get; set; }
+
+        public Author()
+        {
+            Books = new List<Book>();
+        }
     }
 }
