@@ -17,9 +17,33 @@ namespace Bookcrossing.Data.Repositories
 
         }
 
-        public Task<IQueryable<HistoryOfIssuingBooks>> GetAsync(HistoryParams parametrs, CancellationToken ct = default)
+        public async Task<IQueryable<HistoryOfIssuingBooks>> GetAsync(HistoryParams parameters, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            IQueryable<HistoryOfIssuingBooks> entities = _dbContext.HistoryOfIssuingBooks;
+
+            if (parameters.From != default)
+            {
+                if (parameters.To != default)
+                {
+                    entities = entities.Where(item => item.DateOfReceiving.Date >= parameters.From.Date && item.DateOfDelivery <= parameters.To);
+                }
+                else
+                {
+                    entities = entities.Where(snippet => snippet.DateOfReceiving.Date >= parameters.From.Date);
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameters.SearchStringh))
+            {
+                entities = entities.Where(x => x.Book.ISBIN.Contains(parameters.SearchStringh) || x.Book.Name.Contains(parameters.SearchStringh));
+            }
+
+            return entities;
         }
     }
 }
