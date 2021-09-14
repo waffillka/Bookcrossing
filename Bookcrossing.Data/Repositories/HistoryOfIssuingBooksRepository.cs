@@ -28,9 +28,19 @@ namespace Bookcrossing.Data.Repositories
 
             if (parameters.From != default || parameters.To != default)
             {
-                entities = entities.Where(item => parameters.From != default ? item.DateOfReceiving.Date >= parameters.From.Date : true 
-                                                 && parameters.To != default ? item.DateOfDelivery.Date <= parameters.To.Date : true);
-            }
+                if (parameters.From == default)
+                {
+                    entities = entities.Where(snippet => snippet.DateOfReceiving.Date <= parameters.From.Date);
+                }
+                else if (parameters.To == default)
+                {
+                    entities = entities.Where(snippet => snippet.DateOfReceiving.Date >= parameters.From.Date);
+                }
+                else
+                {
+                    entities = entities.Where(item => item.DateOfReceiving.Date >= parameters.From.Date && item.DateOfReceiving.Date <= parameters.To.Date);
+                }
+            }          
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchString))
             {
