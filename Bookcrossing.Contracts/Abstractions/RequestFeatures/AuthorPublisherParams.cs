@@ -2,6 +2,6 @@
 {
     public class AuthorPublisherParams : RequestFeatures
     {
-        public string SearchStringh { get; set; }
+        public string SearchString { get; set; }
     }
 }

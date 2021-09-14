@@ -19,7 +19,7 @@ namespace Bookcrossing.Data.Repositories
 
         public async Task<IQueryable<Publisher>> GetAsync(AuthorPublisherParams parameters, CancellationToken ct = default)
         {
-            var entities = _dbContext.Publishers.Where(x => x.Name.Contains(parameters.SearchStringh));
+            var entities = _dbContext.Publishers.Where(x => x.Name.Contains(parameters.SearchString));
 
             entities = parameters.OrderyBy == Ordery.Asc ? entities.OrderBy(x => x.Name) : entities.OrderByDescending(x => x.Name);
 

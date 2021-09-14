@@ -38,9 +38,9 @@ namespace Bookcrossing.Data.Repositories
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(parameters.SearchStringh))
+            if (!string.IsNullOrWhiteSpace(parameters.SearchString))
             {
-                entities = entities.Where(x => x.Book.ISBIN.Contains(parameters.SearchStringh) || x.Book.Name.Contains(parameters.SearchStringh));
+                entities = entities.Where(x => x.Book.ISBIN.Contains(parameters.SearchString) || x.Book.Name.Contains(parameters.SearchString));
             }
 
             return entities;

@@ -27,13 +27,13 @@ namespace Bookcrossing.Data.Repositories
 
             IQueryable<Book> entities = _dbContext.Books;
 
-            if (!string.IsNullOrWhiteSpace(parameters.SearchStringh))
+            if (!string.IsNullOrWhiteSpace(parameters.SearchString))
             {
-                entities = entities.Where(x => x.Name.Contains(parameters.SearchStringh)
-                                                || x.Description.Contains(parameters.SearchStringh)
-                                                || x.Authors.Any(c => c.Name.Contains(parameters.SearchStringh)) // что-то похожее на 48 строке 
-                                                || x.ISBIN.Contains(parameters.SearchStringh)
-                                                || x.Publisher.Name.Contains(parameters.SearchStringh));
+                entities = entities.Where(x => x.Name.Contains(parameters.SearchString)
+                                                || x.Description.Contains(parameters.SearchString)
+                                                || x.Authors.Any(c => c.Name.Contains(parameters.SearchString)) // что-то похожее на 48 строке 
+                                                || x.ISBIN.Contains(parameters.SearchString)
+                                                || x.Publisher.Name.Contains(parameters.SearchString));
             }
 
             if (parameters.IsFree == true)

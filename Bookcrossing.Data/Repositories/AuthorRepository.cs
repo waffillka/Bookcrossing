@@ -25,7 +25,7 @@ namespace Bookcrossing.Data.Repositories
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            var entities = _dbContext.Authors.Where(x => x.Name.Contains(parameters.SearchStringh));
+            var entities = _dbContext.Authors.Where(x => x.Name.Contains(parameters.SearchString));
 
             entities = parameters.OrderyBy == Ordery.Asc ? entities.OrderBy(x => x.Name) : entities.OrderByDescending(x => x.Name);
 
