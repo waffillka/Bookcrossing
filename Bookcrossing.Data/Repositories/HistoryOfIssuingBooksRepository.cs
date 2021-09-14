@@ -26,21 +26,16 @@ namespace Bookcrossing.Data.Repositories
 
             IQueryable<HistoryOfIssuingBooks> entities = DbContext.HistoryOfIssuingBooks;
 
-            if (parameters.From != default || parameters.To != default)
+            if (parameters.From != default)
             {
-                if (parameters.From == default)
-                {
-                    entities = entities.Where(snippet => snippet.DateOfReceiving.Date <= parameters.From.Date);
-                }
-                else if (parameters.To == default)
-                {
-                    entities = entities.Where(snippet => snippet.DateOfReceiving.Date >= parameters.From.Date);
-                }
-                else
-                {
-                    entities = entities.Where(item => item.DateOfReceiving.Date >= parameters.From.Date && item.DateOfReceiving.Date <= parameters.To.Date);
-                }
-            }          
+                entities = entities.Where(snippet => snippet.DateOfReceiving.Date <= parameters.From.Date);
+            }
+
+            if (parameters.To != default)
+            {
+                entities = entities.Where(snippet => snippet.DateOfReceiving.Date >= parameters.From.Date);
+            }
+                     
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchString))
             {
