@@ -7,6 +7,11 @@ namespace Bookcrossing.Data.Entities
 {
     public class Book : EntityBase
     {
+        public Book()
+        {
+            Authors = new List<Author>();
+        }
+
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
@@ -24,11 +29,5 @@ namespace Bookcrossing.Data.Entities
 
         [NotMapped]
         public bool Free => RecipientId == null;
-
-        public Book()
-        {
-            Authors = new List<Author>();
-        }
-
     }
 }
