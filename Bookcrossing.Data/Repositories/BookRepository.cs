@@ -41,11 +41,6 @@ namespace Bookcrossing.Data.Repositories
                 entities = entities.Where(x => x.RecipientId != null);
             }
 
-            if (parameters.Authors != null)
-            {
-                entities = entities.Where(book => book.Authors.Any(x => parameters.Authors.Contains(x.Name)));
-            }
-
             if (parameters.Publishers != null)
             {
                 entities = entities.Where(book => parameters.Publishers.Contains(book.Publisher.Name));
