@@ -8,23 +8,28 @@ namespace Bookcrossing.Data.Configuration
 {
     public static class DependenciesConfiguration
     {
-        public static IServiceCollection ConfigureSqlContext(this IServiceCollection services, string connectionString)
+        public static void ConfigureSqlContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<BookcrossingDbContext>(opts =>
                 opts.UseLazyLoadingProxies()
                 .UseSqlServer(connectionString, b => b.MigrationsAssembly("Bookcrossing.Data")));
-
-            return services;
         }
 
-        public static IServiceCollection RegisterRepositories(this IServiceCollection services)
+        public static void RegisterRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IAuthorRepository, AuthorRepository>();
-            services.AddScoped<IPublisherRepository, PublisherRepository>();
-            services.AddScoped<IHistoryOfIssuingBooksRepository, HistoryOfIssuingBooksRepository>();
-            services.AddScoped<IBookRepository, BookRepository>();
+            var currentAssembly = typeof(DependenciesConfiguration);
 
-            return services;
+            services.Scan(scan => scan.FromAssembliesOf(currentAssembly)
+                                      .AddClasses(classes => classes.AssignableTo(typeof(IRepositoryBase<>)))
+                                      .AsImplementedInterfaces()
+                                      .WithTransientLifetime()
+                         );
+        }
+
+        public static void BookcrossingData(this IServiceCollection services, string connectionString)
+        {
+            services.ConfigureSqlContext(connectionString);
+            services.RegisterRepositories();
         }
     }
 }
