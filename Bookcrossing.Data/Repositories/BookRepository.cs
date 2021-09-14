@@ -36,7 +36,7 @@ namespace Bookcrossing.Data.Repositories
                                                 || x.Publisher.Name.Contains(parameters.SearchString));
             }
 
-            if (parameters.IsFree == true)
+            if (parameters.IsFree)
             {
                 entities = entities.Where(x => x.RecipientId != null);
             }
