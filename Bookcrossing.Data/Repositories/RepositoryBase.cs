@@ -66,6 +66,11 @@ namespace Bookcrossing.Data.Repositories
 
         public virtual async Task<IQueryable<TEntity>> GetAsync(RequestFeatures pagination, CancellationToken ct = default)
         {
+            if (pagination == null)
+            {
+                throw new ArgumentNullException(nameof(pagination));
+            }
+
             var entities = _dbContext.Set<TEntity>().Skip((pagination.PageNumber - 1) * pagination.PageSize).Take(pagination.PageSize);
             return entities;
         }
@@ -87,11 +92,19 @@ namespace Bookcrossing.Data.Repositories
             return entity.Entity;
         }
 
-        public async Task<IQueryable<TEntity>> GetByCondition(Expression<Func<TEntity, bool>> expression, RequestFeatures parameters, CancellationToken ct = default) =>
-            _dbContext.Set<TEntity>()
+        public async Task<IQueryable<TEntity>> GetByCondition(Expression<Func<TEntity, bool>> expression, RequestFeatures parameters, CancellationToken ct = default)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            return _dbContext.Set<TEntity>()
                 .Where(expression)
                 .Skip((parameters.PageNumber - 1) * parameters.PageSize)
                 .Take(parameters.PageSize);
+        }
+
 
         public async Task<TEntity> GetOneByCondition(Expression<Func<TEntity, bool>> expression, CancellationToken ct = default) =>
             _dbContext.Set<TEntity>().FirstOrDefaultAsync(expression, ct).Result;

@@ -1,4 +1,5 @@
 ﻿using Bookcrossing.Contracts.Abstractions.RequestFeatures;
+using Bookcrossing.Contracts.Enumeration;
 using Bookcrossing.Data.DbContext;
 using Bookcrossing.Data.Entities;
 using Bookcrossing.Data.Repositories.Interface;
@@ -18,16 +19,9 @@ namespace Bookcrossing.Data.Repositories
 
         public async Task<IQueryable<Publisher>> GetAsync(AuthorPublisherParams parameters, CancellationToken ct = default)
         {
-            var entities = _dbContext.Publishers.Where(x => x.Name.Contains(parameters.MatchString));
+            var entities = _dbContext.Publishers.Where(x => x.Name.Contains(parameters.SearchStringh));
 
-            if (parameters.OrderyBy == "abc")
-            {
-                entities.OrderBy(x => x.Name);
-            }
-            else
-            {
-                entities.OrderByDescending(x => x.Name);
-            }
+            entities = parameters.OrderyBy == Ordery.Asc ? entities.OrderBy(x => x.Name) : entities.OrderByDescending(x => x.Name);
 
             return entities.Skip((parameters.PageNumber - 1) * parameters.PageSize)
                 .Take(parameters.PageSize); ;
