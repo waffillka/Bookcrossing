@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Bookcrossing.Contracts.DataTransferObjects;
+using Bookcrossing.Contracts.DataTransferObjects.Deteils;
+using Bookcrossing.Contracts.DataTransferObjects.LookUp;
 using Bookcrossing.Data.Entities;
 
 namespace Bookcrossing.Application.Mapping
@@ -8,13 +10,20 @@ namespace Bookcrossing.Application.Mapping
     {
         public MappingConfiguration()
         {
-            CreateMap<Author, AuthorDto>().ReverseMap();
-            CreateMap<Book, BookDto>().ReverseMap();
-            CreateMap<HistoryOfIssuingBooks, HistoryDto>();
-            CreateMap<Publisher, PublisherDto>().ReverseMap();
-            CreateMap<User, UserDto>();
-           
+            CreateMap<Author, AuthorDeteilsDto>().ReverseMap();
+            CreateMap<Author, AuthorLookUpDto>();
 
+            CreateMap<HistoryOfIssuingBooks, HistoryDto>();
+
+            CreateMap<Publisher, PublisherDeteilsDto>().ReverseMap();
+            CreateMap<Publisher, PublisherLookUpDto>();
+
+            CreateMap<User, UserDeteilsDto>();
+
+            CreateMap<Book, BookDeteilsDto>().ReverseMap();
+            CreateMap<Book, BookLookUpDto>().ForMember(c => c.Description,
+                opt => opt.MapFrom(
+                    x => x.Description.Length > 140 ? x.Description.Substring(0, 140) : x.Description));
         }
     }
 }
