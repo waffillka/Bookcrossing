@@ -3,6 +3,7 @@ using Bookcrossing.Contracts.Enumeration;
 using Bookcrossing.Data.DbContext;
 using Bookcrossing.Data.Entities;
 using Bookcrossing.Data.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -24,8 +25,8 @@ namespace Bookcrossing.Data.Repositories
 
             entities = parameters.OrderBy == Order.Asc ? entities.OrderBy(x => x.Name) : entities.OrderByDescending(x => x.Name);
 
-            return entities.Skip((parameters.PageNumber - 1) * parameters.PageSize)
-                .Take(parameters.PageSize).ToList();
+            return await entities.Skip((parameters.PageNumber - 1) * parameters.PageSize)
+                .Take(parameters.PageSize).ToListAsync(ct).ConfigureAwait(false);
         }
     }
 }

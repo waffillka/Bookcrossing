@@ -79,7 +79,7 @@ namespace Bookcrossing.Data.Repositories
 
             var entities = DbContext.Set<TEntity>().Skip((pagination.PageNumber - 1) * pagination.PageSize).Take(pagination.PageSize);
 
-            return entities.ToList();
+            return await entities.ToListAsync(ct).ConfigureAwait(false);
         }
 
         public async Task<TEntity> InsertAsync(TEntity newEntity, CancellationToken ct = default)
@@ -111,11 +111,11 @@ namespace Bookcrossing.Data.Repositories
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            return DbContext.Set<TEntity>()
+            return await DbContext.Set<TEntity>()
                 .Where(expression)
                 .Skip((parameters.PageNumber - 1) * parameters.PageSize)
                 .Take(parameters.PageSize)
-                .ToList();
+                .ToListAsync(ct).ConfigureAwait(false);
         }
 
 

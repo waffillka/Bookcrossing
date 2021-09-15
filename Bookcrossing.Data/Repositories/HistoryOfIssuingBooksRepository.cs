@@ -2,6 +2,7 @@
 using Bookcrossing.Data.DbContext;
 using Bookcrossing.Data.Entities;
 using Bookcrossing.Data.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,7 @@ namespace Bookcrossing.Data.Repositories
                 entities = entities.Where(x => x.Book.ISBIN.Contains(parameters.SearchString) || x.Book.Name.Contains(parameters.SearchString));
             }
 
-            return entities.ToList();
+            return await entities.ToListAsync(ct).ConfigureAwait(false);
         }
     }
 }

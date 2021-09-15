@@ -3,6 +3,7 @@ using Bookcrossing.Contracts.Enumeration;
 using Bookcrossing.Data.DbContext;
 using Bookcrossing.Data.Entities;
 using Bookcrossing.Data.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace Bookcrossing.Data.Repositories
             entities = entities.Skip((parameters.PageNumber - 1) * parameters.PageSize)
                 .Take(parameters.PageSize);
 
-            return entities.ToList();
+            return await entities.ToListAsync(ct).ConfigureAwait(false);
         }
     }
 }
