@@ -1,7 +1,6 @@
 ﻿using Bookcrossing.Application.Commands.Book;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Bookcrossing.Host.Controllers
 {
@@ -19,7 +18,7 @@ namespace Bookcrossing.Host.Controllers
         [HttpGet]
         public IActionResult GetWithParams(GetBooksWithParametersQuery parametersQuery)
         {
-            var result =  _mediator.Send(parametersQuery).ConfigureAwait(false);
+            var result = _mediator.Send(parametersQuery).ConfigureAwait(false);
 
             return Ok(result);
         }
