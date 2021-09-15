@@ -1,11 +1,6 @@
 ﻿using Bookcrossing.Application.Commands.Book;
-using Bookcrossing.Contracts.Abstractions.RequestFeatures;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookcrossing.Host.Controllers

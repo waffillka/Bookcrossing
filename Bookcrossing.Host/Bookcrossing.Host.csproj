@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bookcrossing.Application\Bookcrossing.Application.csproj" />
     <ProjectReference Include="..\Bookcrossing.Service\Bookcrossing.Application.csproj" />
   </ItemGroup>
 
