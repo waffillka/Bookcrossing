@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bookcrossing.Data\Bookcrossing.Data.csproj" />
+    <ProjectReference Include="..\Bookcrossing.Service\Bookcrossing.Application.csproj" />
   </ItemGroup>
 
 </Project>

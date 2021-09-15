@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Bookcrossing.Service.Configuration
+namespace Bookcrossing.Application.Configuration
 {
-    public class DependenciesConfiguration
+    public static class DependenciesConfiguration
     {
+        public static void BookcrossingService(this IServiceCollection service)
+        {
+            service.RegisterMediator();
+        }
+
+        public static void RegisterMediator(this IServiceCollection service)
+        {
+
+        }
     }
 }
