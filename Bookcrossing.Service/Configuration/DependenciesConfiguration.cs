@@ -1,17 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Bookcrossing.Application.Configuration
 {
     public static class DependenciesConfiguration
     {
-        public static void BookcrossingService(this IServiceCollection service)
+        public static void BookcrossingService(this IServiceCollection services)
         {
-            service.RegisterMediator();
+            services.RegisterMediator();
         }
 
-        public static void RegisterMediator(this IServiceCollection service)
+        private static void RegisterMediator(this IServiceCollection services)
         {
-
+            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
     }
 }

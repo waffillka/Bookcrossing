@@ -1,3 +1,4 @@
+using Bookcrossing.Application.Configuration;
 using Bookcrossing.Data.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,6 +22,8 @@ namespace Bookcrossing.Host
         public void ConfigureServices(IServiceCollection services)
         {
             services.BookcrossingData(Configuration.GetConnectionString("sqlConnection"));
+            services.BookcrossingService();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
