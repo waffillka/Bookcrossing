@@ -8,14 +8,20 @@ namespace Bookcrossing.Data.Configuration
 {
     public static class DependenciesConfiguration
     {
-        public static void ConfigureSqlContext(this IServiceCollection services, string connectionString)
+        public static void BookcrossingData(this IServiceCollection services, string connectionString)
+        {
+            services.ConfigureSqlContext(connectionString);
+            services.RegisterRepositories();
+        }
+
+        private static void ConfigureSqlContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<BookcrossingDbContext>(opts =>
                 opts.UseLazyLoadingProxies()
                 .UseSqlServer(connectionString, b => b.MigrationsAssembly("Bookcrossing.Data")));
         }
 
-        public static void RegisterRepositories(this IServiceCollection services)
+        private static void RegisterRepositories(this IServiceCollection services)
         {
             var currentAssembly = typeof(DependenciesConfiguration);
 
@@ -24,12 +30,6 @@ namespace Bookcrossing.Data.Configuration
                                       .AsImplementedInterfaces()
                                       .WithTransientLifetime()
                          );
-        }
-
-        public static void BookcrossingData(this IServiceCollection services, string connectionString)
-        {
-            services.ConfigureSqlContext(connectionString);
-            services.RegisterRepositories();
-        }
+        } 
     }
 }
