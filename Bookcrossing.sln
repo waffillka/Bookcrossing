@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookcrossing.Host", "Bookcrossing\Bookcrossing.Host.csproj", "{2B27410C-0FDD-48E3-8149-EDCED122B1CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookcrossing.Host", "Bookcrossing.Host\Bookcrossing.Host.csproj", "{2B27410C-0FDD-48E3-8149-EDCED122B1CB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookcrossing.Data", "Bookcrossing.Data\Bookcrossing.Data.csproj", "{1A33CEE5-3C23-4427-AACC-52DC46B1FA0F}"
 EndProject
