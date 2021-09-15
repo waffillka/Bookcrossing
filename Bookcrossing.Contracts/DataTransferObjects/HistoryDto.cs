@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bookcrossing.Contracts.DataTransferObjects.Deteils;
+using Bookcrossing.Contracts.DataTransferObjects.LookUp;
+using System;
 
 namespace Bookcrossing.Contracts.DataTransferObjects
 {
     public class HistoryDto
     {
-        public virtual UserDto User { get; set; }
-        public virtual BookDto Book { get; set; }
+        public virtual UserDeteilsDto User { get; set; }
+        public virtual BookLookUpDto Book { get; set; }
         public DateTime DateOfReceiving { get; set; }
         public DateTime DateOfDelivery { get; set; }
     }
