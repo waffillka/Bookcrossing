@@ -35,7 +35,7 @@ namespace Bookcrossing.Data.Repositories
             {
                 entities = entities.Where(snippet => snippet.DateOfReceiving.Date >= parameters.From.Date);
             }
-                     
+
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchString))
             {

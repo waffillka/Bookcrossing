@@ -23,8 +23,8 @@ namespace Bookcrossing.Data.Entities
         public Guid OwnerId { get; set; }
         public virtual User Owner { get; set; }
         public Guid? RecipientId { get; set; }
-        public virtual User Recipient { get; set; } 
-        
+        public virtual User Recipient { get; set; }
+
         public virtual ICollection<Author> Authors { get; set; }
 
         [NotMapped]

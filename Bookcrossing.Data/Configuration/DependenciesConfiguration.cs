@@ -1,5 +1,4 @@
 ﻿using Bookcrossing.Data.DbContext;
-using Bookcrossing.Data.Repositories;
 using Bookcrossing.Data.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +29,6 @@ namespace Bookcrossing.Data.Configuration
                                       .AsImplementedInterfaces()
                                       .WithTransientLifetime()
                          );
-        } 
+        }
     }
 }

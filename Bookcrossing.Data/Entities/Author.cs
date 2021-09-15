@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Bookcrossing.Data.Entities
 {
     public class Author : EntityBase
-    { 
+    {
         public Author()
         {
             Books = new List<Book>();

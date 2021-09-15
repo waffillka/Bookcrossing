@@ -12,6 +12,6 @@ namespace Bookcrossing.Data.Entities
 
         public string Nickname { get; set; }
         public virtual ICollection<Book> OwnerBook { get; set; }
-        public virtual ICollection<Book> BookRecipient { get; set; }        
+        public virtual ICollection<Book> BookRecipient { get; set; }
     }
 }

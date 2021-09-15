@@ -9,6 +9,6 @@ namespace Bookcrossing.Data.Entities
         public Guid BookId { get; set; }
         public virtual Book Book { get; set; }
         public DateTime DateOfReceiving { get; set; }
-        public DateTime DateOfDelivery { get; set; } 
+        public DateTime DateOfDelivery { get; set; }
     }
 }
