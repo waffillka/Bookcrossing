@@ -4,6 +4,7 @@ using Bookcrossing.Data.DbContext;
 using Bookcrossing.Data.Entities;
 using Bookcrossing.Data.Repositories.Interface;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Bookcrossing.Data.Repositories
 
         }
 
-        public async Task<IQueryable<Author>> GetAsync(AuthorPublisherParams parameters, CancellationToken ct = default)
+        public async Task<IReadOnlyCollection<Author>> GetAsync(AuthorPublisherParams parameters, CancellationToken ct = default)
         {
             if (parameters == null)
             {
@@ -29,8 +30,10 @@ namespace Bookcrossing.Data.Repositories
 
             entities = parameters.OrderBy == Order.Asc ? entities.OrderBy(x => x.Name) : entities.OrderByDescending(x => x.Name);
 
-            return entities.Skip((parameters.PageNumber - 1) * parameters.PageSize)
+            entities = entities.Skip((parameters.PageNumber - 1) * parameters.PageSize)
                 .Take(parameters.PageSize);
+
+            return entities.ToList();
         }
     }
 }

@@ -4,6 +4,7 @@ using Bookcrossing.Data.Interfaces;
 using Bookcrossing.Data.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -69,7 +70,7 @@ namespace Bookcrossing.Data.Repositories
             return entity.Result;
         }
 
-        public virtual async Task<IQueryable<TEntity>> GetAsync(RequestFeatures pagination, CancellationToken ct = default)
+        public async Task<IReadOnlyCollection<TEntity>> GetAsync(RequestFeatures pagination, CancellationToken ct = default)
         {
             if (pagination == null)
             {
@@ -78,7 +79,7 @@ namespace Bookcrossing.Data.Repositories
 
             var entities = DbContext.Set<TEntity>().Skip((pagination.PageNumber - 1) * pagination.PageSize).Take(pagination.PageSize);
 
-            return entities;
+            return entities.ToList();
         }
 
         public async Task<TEntity> InsertAsync(TEntity newEntity, CancellationToken ct = default)
@@ -103,7 +104,7 @@ namespace Bookcrossing.Data.Repositories
             return entity.Entity;
         }
 
-        public async Task<IQueryable<TEntity>> GetByCondition(Expression<Func<TEntity, bool>> expression, RequestFeatures parameters, CancellationToken ct = default)
+        public async Task<IReadOnlyCollection<TEntity>> GetByCondition(Expression<Func<TEntity, bool>> expression, RequestFeatures parameters, CancellationToken ct = default)
         {
             if (parameters == null)
             {
@@ -113,7 +114,8 @@ namespace Bookcrossing.Data.Repositories
             return DbContext.Set<TEntity>()
                 .Where(expression)
                 .Skip((parameters.PageNumber - 1) * parameters.PageSize)
-                .Take(parameters.PageSize);
+                .Take(parameters.PageSize)
+                .ToList();
         }
 
 
