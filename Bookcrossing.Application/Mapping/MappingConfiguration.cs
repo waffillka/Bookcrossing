@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Bookcrossing.Contracts.DataTransferObjects;
+using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using Bookcrossing.Contracts.DataTransferObjects.Deteils;
 using Bookcrossing.Contracts.DataTransferObjects.LookUp;
 using Bookcrossing.Data.Entities;
@@ -12,6 +13,7 @@ namespace Bookcrossing.Application.Mapping
         {
             CreateMap<Author, AuthorDeteilsDto>().ReverseMap();
             CreateMap<Author, AuthorLookUpDto>();
+            CreateMap<AuthorCreationDto, Author>();
 
             CreateMap<HistoryOfIssuingBooks, HistoryDto>();
 
