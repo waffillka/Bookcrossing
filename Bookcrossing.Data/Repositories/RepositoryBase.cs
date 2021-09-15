@@ -22,7 +22,7 @@ namespace Bookcrossing.Data.Repositories
             DbContext = dbContext;
         }
 
-        public async Task Delete(TEntity entityToRemove, bool hard, CancellationToken ct = default)
+        public async Task Delete(TEntity entityToRemove, CancellationToken ct = default, bool hard = false)
         {
             if (hard)
             {
@@ -41,7 +41,7 @@ namespace Bookcrossing.Data.Repositories
             SaveAsync(ct);
         }
 
-        public async Task Delete(TEntity[] entitiesToRemove, bool hard, CancellationToken ct = default)
+        public async Task Delete(TEntity[] entitiesToRemove, CancellationToken ct = default, bool hard = false)
         {
             if (hard)
             {

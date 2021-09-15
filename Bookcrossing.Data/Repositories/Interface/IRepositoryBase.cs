@@ -16,8 +16,8 @@ namespace Bookcrossing.Data.Repositories.Interface
         Task<TEntity> InsertAsync(TEntity newEntity, CancellationToken ct = default);
         Task InsertAsync(TEntity[] newEntity, CancellationToken ct = default);
         Task<TEntity> UpdateAsync(TEntity entityToUpdate, CancellationToken ct = default);
-        Task Delete(TEntity entityToRemove, bool hard, CancellationToken ct = default);
-        Task Delete(TEntity[] entityToRemove, bool hard, CancellationToken ct = default);
+        Task Delete(TEntity entityToRemove, CancellationToken ct = default, bool hard = false);
+        Task Delete(TEntity[] entityToRemove, CancellationToken ct = default, bool hard = false);
         Task<IReadOnlyCollection<TEntity>> GetByCondition(Expression<Func<TEntity, bool>> expression, RequestFeatures parameters, CancellationToken ct = default);
         Task<TEntity> GetOneByCondition(Expression<Func<TEntity, bool>> expression, CancellationToken ct = default);
         Task<int> SaveAsync(CancellationToken ct = default);
