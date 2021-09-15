@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookcrossing.Host", "Bookcr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookcrossing.Data", "Bookcrossing.Data\Bookcrossing.Data.csproj", "{1A33CEE5-3C23-4427-AACC-52DC46B1FA0F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookcrossing.Application", "Bookcrossing.Service\Bookcrossing.Application.csproj", "{F738E9DD-74EE-480B-B7EC-57D743036860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookcrossing.Application", "Bookcrossing.Application\Bookcrossing.Application.csproj", "{F738E9DD-74EE-480B-B7EC-57D743036860}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookcrossing.Contracts", "Bookcrossing.Contracts\Bookcrossing.Contracts.csproj", "{BE65ACC5-B115-41F7-8A92-D9A8D4448628}"
 EndProject
