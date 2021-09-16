@@ -19,6 +19,7 @@ namespace Bookcrossing.Application.Mapping
 
             CreateMap<Publisher, PublisherDeteilsDto>().ReverseMap();
             CreateMap<Publisher, PublisherLookUpDto>();
+            CreateMap<PublisherCreationDto, Publisher>();
 
             CreateMap<User, UserDeteilsDto>();
 
