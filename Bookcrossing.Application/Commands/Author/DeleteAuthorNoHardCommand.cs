@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Bookcrossing.Data.Repositories.Interface;
+﻿using Bookcrossing.Data.Repositories.Interface;
 using MediatR;
 using System;
 using System.Threading;
@@ -20,17 +19,14 @@ namespace Bookcrossing.Application.Commands.Author
     public class DeleteAuthorCommandHandler : IRequestHandler<DeleteAuthorNoHardCommand>
     {
         private readonly IAuthorRepository _authorRepository;
-        private readonly IMapper _mapper;
 
-        public DeleteAuthorCommandHandler(IAuthorRepository authorRepository, IMapper mapper)
+        public DeleteAuthorCommandHandler(IAuthorRepository authorRepository)
         {
             _authorRepository = authorRepository;
-            _mapper = mapper;
         }
         public async Task<Unit> Handle(DeleteAuthorNoHardCommand request, CancellationToken ct)
         {
-            var entityToRemove = await _authorRepository.GetOneByCondition(x => x.Id == request.IdAuthor, ct);
-            _authorRepository.Delete(entityToRemove, ct);
+            _authorRepository.Delete(request.IdAuthor, ct);
 
             return Unit.Value;
         }      
