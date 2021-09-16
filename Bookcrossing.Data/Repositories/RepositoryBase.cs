@@ -63,6 +63,27 @@ namespace Bookcrossing.Data.Repositories
             SaveAsync(ct);
         }
 
+        public async Task Delete(Guid id, CancellationToken ct = default, bool hard = false)
+        {
+            var entity = DbContext.Set<TEntity>().FirstOrDefault(x => x.Id == id);
+
+            if (hard)
+            {
+                DbContext.Set<TEntity>().Remove(entity);
+            }
+            else
+            {
+                if (DbContext.Entry(entity).State == EntityState.Detached)
+                {
+                    DbContext.Set<TEntity>().Attach(entity);
+                }
+
+                entity.IsDeleted = true;
+            }
+
+            SaveAsync(ct);
+        }
+
         public async Task<TEntity> GetAsync(Guid id, CancellationToken ct = default)
         {
             var entity = DbContext.Set<TEntity>().FindAsync(id, ct);
