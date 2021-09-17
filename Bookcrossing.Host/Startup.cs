@@ -1,5 +1,6 @@
 using Bookcrossing.Application.Configuration;
 using Bookcrossing.Data.Configuration;
+using Bookcrossing.Host.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,7 @@ namespace Bookcrossing.Host
         public void ConfigureServices(IServiceCollection services)
         {
             services.BookcrossingData(Configuration.GetConnectionString("sqlConnection"));
-            services.BookcrossingService();
+            services.BookcrossingApplication();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -41,6 +42,7 @@ namespace Bookcrossing.Host
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bookcrossing v1"));
             }
 
+            app.ConfigureExceptionHandler();
             app.UseHttpsRedirection();
 
             app.UseRouting();
