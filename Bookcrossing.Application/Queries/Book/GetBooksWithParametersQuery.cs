@@ -29,6 +29,7 @@ namespace Bookcrossing.Application.Commands.Book
             _bookRepository = bookRepository;
             _mapper = mapper;
         }
+
         public async Task<IReadOnlyCollection<BookLookUpDto>> Handle(GetBooksWithParametersQuery request, CancellationToken cancellationToken)
         {
             var books = await _bookRepository.GetAsync(request.Parameters);
