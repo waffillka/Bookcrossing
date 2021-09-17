@@ -10,9 +10,9 @@ namespace Bookcrossing.Contracts.DataTransferObjects.Deteils
         public string ISBIN { get; set; }
         public Guid PublisherId { get; set; }
         public PublisherDeteilsDto Publisher { get; set; }
-        public virtual UserDeteilsDto Owner { get; set; }
-        public virtual UserDeteilsDto Recipient { get; set; }
+        public UserDeteilsDto Owner { get; set; }
+        public UserDeteilsDto Recipient { get; set; }
 
-        public virtual ICollection<AuthorDeteilsDto> Authors { get; set; }
+        public ICollection<AuthorDeteilsDto> Authors { get; set; }
     }
 }
