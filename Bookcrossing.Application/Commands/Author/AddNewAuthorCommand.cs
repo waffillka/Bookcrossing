@@ -12,10 +12,10 @@ namespace Bookcrossing.Application.Commands.Author
     {
         public AddNewAuthorCommand(AuthorCreationDto athor)
         {
-            Athor = athor;
+            Author = athor;
         }
 
-        public AuthorCreationDto Athor { get; }
+        public AuthorCreationDto Author { get; }
     }
 
     public class AddNewAuthorCommandHandler : IRequestHandler<AddNewAuthorCommand, AuthorDeteilsDto>
@@ -31,7 +31,7 @@ namespace Bookcrossing.Application.Commands.Author
 
         public async Task<AuthorDeteilsDto> Handle(AddNewAuthorCommand request, CancellationToken ct)
         {
-            var entity = _mapper.Map<Data.Entities.Author>(request.Athor);
+            var entity = _mapper.Map<Data.Entities.Author>(request.Author);
             entity = await _authorRepository.InsertAsync(entity, ct);
             var result = _mapper.Map<AuthorDeteilsDto>(entity);
 
