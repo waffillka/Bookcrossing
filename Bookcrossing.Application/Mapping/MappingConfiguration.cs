@@ -11,19 +11,20 @@ namespace Bookcrossing.Application.Mapping
     {
         public MappingConfiguration()
         {
-            CreateMap<Author, AuthorDeteilsDto>().ReverseMap();
+            CreateMap<Author, AuthorDeteilsDto>();
             CreateMap<Author, AuthorLookUpDto>();
-            CreateMap<AuthorCreationDto, Author>();
+            CreateMap<AuthorCreationDto, Author>().ReverseMap();
 
             CreateMap<HistoryOfIssuingBooks, HistoryDto>();
 
-            CreateMap<Publisher, PublisherDeteilsDto>().ReverseMap();
+            CreateMap<Publisher, PublisherDeteilsDto>();
             CreateMap<Publisher, PublisherLookUpDto>();
-            CreateMap<PublisherCreationDto, Publisher>();
+            CreateMap<PublisherCreationDto, Publisher>().ReverseMap();
 
             CreateMap<User, UserDeteilsDto>();
 
-            CreateMap<Book, BookDeteilsDto>().ReverseMap();
+            CreateMap<Book, BookDeteilsDto>();
+            CreateMap<BookCreationDto, Book>().ReverseMap();
             CreateMap<Book, BookLookUpDto>().ForMember(c => c.Description,
                 opt => opt.MapFrom(
                     x => x.Description.Length > 140 ? x.Description.Substring(0, 140) : x.Description));
