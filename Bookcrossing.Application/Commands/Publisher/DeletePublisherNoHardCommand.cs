@@ -19,6 +19,7 @@ namespace Bookcrossing.Application.Commands.Publisher
     public class DeletePublisherNoHardCommandHandler : IRequestHandler<DeletePublisherNoHardCommand>
     {
         private IPublisherRepository _publisherRepository;
+
         public DeletePublisherNoHardCommandHandler(IPublisherRepository publisherRepository)
         {
             _publisherRepository = publisherRepository;

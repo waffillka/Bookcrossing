@@ -22,6 +22,7 @@ namespace Bookcrossing.Application.Commands.Author
     {
         private readonly IMapper _mapper;
         private readonly IAuthorRepository _authorRepository;
+
         public AddNewAuthorCommandHandler(IMapper mapper, IAuthorRepository authorRepository)
         {
             _mapper = mapper;

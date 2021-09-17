@@ -8,17 +8,18 @@ namespace Bookcrossing.Application.Commands.Book
 {
     public class DeleteBookNoHardCommand : IRequest
     {
-        public DeleteBookNoHardCommand(Guid idBook)
+        public DeleteBookNoHardCommand(Guid bookId)
         {
-            IdBook = idBook;
+            BookId = bookId;
         }
 
-        public Guid IdBook { get; }
+        public Guid BookId { get; }
     }
 
     public class DeleteBookNoHardCommandHandler : IRequestHandler<DeleteBookNoHardCommand>
     {
         private readonly IBookRepository _bookRepository;
+
         public DeleteBookNoHardCommandHandler(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
@@ -26,7 +27,7 @@ namespace Bookcrossing.Application.Commands.Book
 
         public async Task<Unit> Handle(DeleteBookNoHardCommand request, CancellationToken ct)
         {
-            _bookRepository.Delete(request.IdBook, ct);
+            _bookRepository.Delete(request.BookId, ct);
 
             return Unit.Value;
         }
