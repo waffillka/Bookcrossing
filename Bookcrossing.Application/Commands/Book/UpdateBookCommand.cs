@@ -37,6 +37,8 @@ namespace Bookcrossing.Application.Commands.Book
             var entity = await _bookRepository.GetOneByCondition(x => x.Id == request.BookId, ct);
 
             _mapper.Map(request.Book, entity);
+
+
             await _bookRepository.SaveAsync(ct);
             var result = _mapper.Map<BookDeteilsDto>(entity);
 
