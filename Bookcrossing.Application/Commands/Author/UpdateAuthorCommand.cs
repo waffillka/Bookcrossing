@@ -3,6 +3,7 @@ using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using Bookcrossing.Contracts.DataTransferObjects.Deteils;
 using Bookcrossing.Data.Repositories.Interface;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,12 +11,14 @@ namespace Bookcrossing.Application.Commands.Author
 {
     public class UpdateAuthorCommand : IRequest<AuthorDeteilsDto>
     {
-        public UpdateAuthorCommand(AuthorCreationDto author)
+        public UpdateAuthorCommand(Guid id, AuthorCreationDto author)
         {
+            AuthorId = id;
             Author = author;
         }
 
         public AuthorCreationDto Author { get; }
+        public Guid AuthorId { get; }
     }
 
     public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, AuthorDeteilsDto>
@@ -31,8 +34,11 @@ namespace Bookcrossing.Application.Commands.Author
 
         public async Task<AuthorDeteilsDto> Handle(UpdateAuthorCommand request, CancellationToken ct)
         {
-            var entity = _mapper.Map<Data.Entities.Author>(request.Author);
-            entity = await _authorRepository.UpdateAsync(entity, ct);
+            var entity = await _authorRepository.GetOneByCondition(x => x.Id == request.AuthorId, ct);
+
+            _mapper.Map(request.Author, entity);
+            await _authorRepository.SaveAsync(ct);
+
             var result = _mapper.Map<AuthorDeteilsDto>(entity);
 
             return result;
