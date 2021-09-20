@@ -1,4 +1,5 @@
 ﻿using Bookcrossing.Application.Commands.Book;
+using Bookcrossing.Application.Queries.Book;
 using Bookcrossing.Contracts.Abstractions.RequestFeatures;
 using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using MediatR;
@@ -19,6 +20,14 @@ namespace Bookcrossing.Host.Controllers
         public BooksController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetWithParams(Guid id)
+        {
+            var result = await _mediator.Send(new GetBookById(id));
+
+            return Ok(result);
         }
 
         [HttpGet]
@@ -43,6 +52,14 @@ namespace Bookcrossing.Host.Controllers
         public async Task<IActionResult> CreateBook([FromBody] BookCreationDto book)
         {
             var result = await _mediator.Send(new AddNewBookCommand(book));
+            return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] BookCreationDto book)
+        {
+            var result = await _mediator.Send(new UpdateBookCommand(id, book));
+
             return Ok(result);
         }
     }

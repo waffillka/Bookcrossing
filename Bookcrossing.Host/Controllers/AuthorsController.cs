@@ -42,6 +42,14 @@ namespace Bookcrossing.Host.Controllers
             return Ok(entities);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAuthors(Guid id)
+        {
+            var entities = await _mediator.Send(new GetAuthorById(id));
+
+            return Ok(entities);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAuthor(Guid id, [FromBody] AuthorCreationDto author)
         {
