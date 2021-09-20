@@ -15,12 +15,11 @@ namespace Bookcrossing.Data.Repositories
     {
         public PublisherRepository(BookcrossingDbContext dbContext)
             : base(dbContext)
-        {
+        { }
 
-        }
-
-        public async Task<IReadOnlyCollection<Publisher>> GetAsync(RequestFeatures parameters, CancellationToken ct = default)
+        public async Task<IReadOnlyCollection<Publisher>> GetAsync(AuthorPublisherParams parameters, CancellationToken ct = default)
         {
+            parameters.SearchString ??= string.Empty;
             var entities = DbContext.Publishers.Where(x => x.Name.Contains(parameters.SearchString));
 
             entities = parameters.OrderBy == Order.Asc ? entities.OrderBy(x => x.Name) : entities.OrderByDescending(x => x.Name);

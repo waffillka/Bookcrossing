@@ -6,6 +6,6 @@ namespace Bookcrossing.Contracts.DataTransferObjects.Deteils
     public class PublisherDeteilsDto
     {
         public string Name { get; set; }
-        public virtual ICollection<BookLookUpDto> Books { get; set; }
+        public ICollection<BookLookUpDto> Books { get; set; }
     }
 }

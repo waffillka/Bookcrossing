@@ -13,12 +13,12 @@ namespace Bookcrossing.Application.Queries.Author
 {
     public class GetAthorsWithParametersQuery : IRequest<ICollection<AuthorLookUpDto>>
     {
-        public GetAthorsWithParametersQuery(RequestFeatures authorParams)
+        public GetAthorsWithParametersQuery(AuthorPublisherParams authorParams)
         {
             AuthorParams = authorParams;
         }
 
-        public RequestFeatures AuthorParams { get; }
+        public AuthorPublisherParams AuthorParams { get; }
     }
 
     public class GetAthorsWithParametersQueryHandler : LoggerRequestHandler<GetAthorsWithParametersQuery, ICollection<AuthorLookUpDto>>

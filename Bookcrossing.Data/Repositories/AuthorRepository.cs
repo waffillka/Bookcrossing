@@ -20,13 +20,9 @@ namespace Bookcrossing.Data.Repositories
 
         }
 
-        public async Task<IReadOnlyCollection<Author>> GetAsync(RequestFeatures parameters, CancellationToken ct = default)
+        public async Task<IReadOnlyCollection<Author>> GetAsync(AuthorPublisherParams parameters, CancellationToken ct = default)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
+            parameters.SearchString ??= string.Empty;
             var entities = DbContext.Authors.Where(x => x.Name.Contains(parameters.SearchString));
 
             entities = parameters.OrderBy == Order.Asc ? entities.OrderBy(x => x.Name) : entities.OrderByDescending(x => x.Name);

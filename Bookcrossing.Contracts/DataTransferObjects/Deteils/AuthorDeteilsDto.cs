@@ -8,6 +8,6 @@ namespace Bookcrossing.Contracts.DataTransferObjects.Deteils
     {
         public string Name { get; set; }
         public DateTime Birthday { get; set; }
-        public virtual ICollection<BookLookUpDto> Books { get; set; }
+        public ICollection<BookLookUpDto> Books { get; set; }
     }
 }

@@ -23,19 +23,19 @@ namespace Bookcrossing.Host.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAuthor([FromBody] AuthorCreationDto author)
         {
-            var result = _mediator.Send(new AddNewAuthorCommand(author));
+            var result = await _mediator.Send(new AddNewAuthorCommand(author));
             return Ok(result);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAuthor([FromQuery] Guid id)
+        public async Task<IActionResult> DeleteAuthor(Guid id)
         {
             await _mediator.Send(new DeleteAuthorNoHardCommand(id));
             return Ok();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAuthors([FromQuery] RequestFeatures parameters)
+        public async Task<IActionResult> GetAuthors([FromQuery] AuthorPublisherParams parameters)
         {
             var entities = await _mediator.Send(new GetAthorsWithParametersQuery(parameters));
 

@@ -34,7 +34,7 @@ namespace Bookcrossing.Application.Queries.Publisher
 
         public override async Task<PublisherDeteilsDto> HandleInternalAsync(GetPublisherById request, CancellationToken cancellationToken)
         {
-            var entity = _publisherRepository.GetOneByCondition(x => x.Id == request.PublisherId);
+            var entity = await _publisherRepository.GetOneByCondition(x => x.Id == request.PublisherId);
 
             return _mapper.Map<PublisherDeteilsDto>(entity);
         }

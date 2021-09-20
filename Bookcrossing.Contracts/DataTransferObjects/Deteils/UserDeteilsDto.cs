@@ -6,7 +6,7 @@ namespace Bookcrossing.Contracts.DataTransferObjects.Deteils
     public class UserDeteilsDto
     {
         public string Nickname { get; set; }
-        public virtual ICollection<BookLookUpDto> OwnerBook { get; set; }
-        public virtual ICollection<BookLookUpDto> BookRecipient { get; set; }
+        public ICollection<BookLookUpDto> OwnerBook { get; set; }
+        public ICollection<BookLookUpDto> BookRecipient { get; set; }
     }
 }

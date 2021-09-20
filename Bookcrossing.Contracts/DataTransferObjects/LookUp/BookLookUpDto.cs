@@ -8,7 +8,7 @@ namespace Bookcrossing.Contracts.DataTransferObjects.LookUp
         public Guid id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public virtual ICollection<AuthorLookUpDto> Authors { get; set; }
-        public virtual PublisherLookUpDto Publisher { get; set; }
+        public ICollection<AuthorLookUpDto> Authors { get; set; }
+        public PublisherLookUpDto Publisher { get; set; }
     }
 }

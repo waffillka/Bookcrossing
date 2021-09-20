@@ -1,4 +1,6 @@
 ﻿using Bookcrossing.Application.Commands.Publisher;
+using Bookcrossing.Application.Queries.Publisher;
+using Bookcrossing.Contracts.Abstractions.RequestFeatures;
 using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -11,31 +13,41 @@ namespace Bookcrossing.Host.Controllers
     [ApiController]
     public class PublisherController : ControllerBase
     {
-        private readonly IMediator _mediatr;
+        private readonly IMediator _mediator;
 
         public PublisherController(IMediator mediatr)
         {
-            _mediatr = mediatr;
+            _mediator = mediatr;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPublishers(Guid id)
+        {
+            var result = await _mediator.Send(new GetPublisherById(id));
+
+            return Ok(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPublishers()
+        public async Task<IActionResult> GetWithParams([FromQuery] AuthorPublisherParams parameters)
         {
-            return Ok();
+            var result = await _mediator.Send(new GetPublishersWithParametersQuery(parameters));
+
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreatePublisher([FromBody] PublisherCreationDto publisher)
         {
-            var result = await _mediatr.Send(new AddNewPublisherCommand(publisher));
+            var result = await _mediator.Send(new AddNewPublisherCommand(publisher));
 
             return Ok(result);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromQuery] Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            await _mediatr.Send(new DeletePublisherNoHardCommand(id));
+            await _mediator.Send(new DeletePublisherNoHardCommand(id));
 
             return Ok();
         }
@@ -43,7 +55,7 @@ namespace Bookcrossing.Host.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] PublisherCreationDto publisher)
         {
-            var result = await _mediatr.Send(new UpdatePublisherCommand(id, publisher));
+            var result = await _mediator.Send(new UpdatePublisherCommand(id, publisher));
 
             return Ok(result);
         }
