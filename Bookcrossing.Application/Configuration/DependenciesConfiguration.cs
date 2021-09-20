@@ -1,4 +1,5 @@
-﻿using Bookcrossing.Application.Mapping;
+﻿using Bookcrossing.Application.Logger;
+using Bookcrossing.Application.Mapping;
 using Bookcrossing.Application.Validators.Pipeline;
 using FluentValidation;
 using MediatR;
@@ -9,11 +10,12 @@ namespace Bookcrossing.Application.Configuration
 {
     public static class DependenciesConfiguration
     {
-        public static void BookcrossingApplication(this IServiceCollection services)
+        public static void AddBookcrossingApplication(this IServiceCollection services)
         {
             services.RegisterMediator();
             services.RegisterMapping();
             services.RegisterFluentValidation();
+            services.RegisterLogger();
         }
 
         private static void RegisterMediator(this IServiceCollection services)
@@ -45,6 +47,11 @@ namespace Bookcrossing.Application.Configuration
             services.AddAutoMapper(
                 c => c.AddProfile<MappingConfiguration>(),
                 typeof(MappingConfiguration));
+        }
+
+        private static void RegisterLogger(this IServiceCollection services)
+        {
+            services.AddScoped<ILoggerManager, LoggerManager>();
         }
     }
 }
