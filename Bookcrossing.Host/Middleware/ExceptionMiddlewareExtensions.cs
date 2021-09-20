@@ -1,4 +1,5 @@
-﻿using Bookcrossing.Contracts.Exceptions.ModelExceptions;
+﻿using Bookcrossing.Application.Logger;
+using Bookcrossing.Contracts.Exceptions.ModelExceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -8,7 +9,7 @@ namespace Bookcrossing.Host.Middleware
 {
     public static class ExceptionMiddlewareExtensions
     {
-        public static void ConfigureExceptionHandler(this IApplicationBuilder app)
+        public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILoggerManager logger)
         {
             app.UseExceptionHandler(appError =>
             {
@@ -20,6 +21,8 @@ namespace Bookcrossing.Host.Middleware
 
                     if (contextFeature != null)
                     {
+                        logger.LogError($"Something went wrong: {contextFeature.Error}");
+
                         switch (contextFeature.Error)
                         {
                             

@@ -1,4 +1,5 @@
 using Bookcrossing.Application.Configuration;
+using Bookcrossing.Application.Logger;
 using Bookcrossing.Data.Configuration;
 using Bookcrossing.Host.Middleware;
 using Microsoft.AspNetCore.Builder;
@@ -22,8 +23,8 @@ namespace Bookcrossing.Host
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.BookcrossingData(Configuration.GetConnectionString("sqlConnection"));
-            services.BookcrossingApplication();
+            services.AddBookcrossingData(Configuration.GetConnectionString("sqlConnection"));
+            services.AddBookcrossingApplication();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -33,7 +34,7 @@ namespace Bookcrossing.Host
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
         {
             if (env.IsDevelopment())
             {
@@ -42,7 +43,7 @@ namespace Bookcrossing.Host
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bookcrossing v1"));
             }
 
-            app.ConfigureExceptionHandler();
+            app.ConfigureExceptionHandler(logger);
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -7,7 +7,7 @@ namespace Bookcrossing.Data.Configuration
 {
     public static class DependenciesConfiguration
     {
-        public static void BookcrossingData(this IServiceCollection services, string connectionString)
+        public static void AddBookcrossingData(this IServiceCollection services, string connectionString)
         {
             services.ConfigureSqlContext(connectionString);
             services.RegisterRepositories();
