@@ -20,7 +20,7 @@ namespace Bookcrossing.Data.Repositories
 
         }
 
-        public async Task<IReadOnlyCollection<Author>> GetAsync(AuthorPublisherParams parameters, CancellationToken ct = default)
+        public async Task<IReadOnlyCollection<Author>> GetAsync(RequestFeatures parameters, CancellationToken ct = default)
         {
             if (parameters == null)
             {

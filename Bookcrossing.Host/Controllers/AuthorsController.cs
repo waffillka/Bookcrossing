@@ -35,7 +35,7 @@ namespace Bookcrossing.Host.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAuthors([FromQuery] AuthorPublisherParams parameters)
+        public async Task<IActionResult> GetAuthors([FromQuery] RequestFeatures parameters)
         {
             var entities = await _mediator.Send(new GetAthorsWithParametersQuery(parameters));
 

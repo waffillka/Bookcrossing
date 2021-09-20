@@ -8,6 +8,6 @@ namespace Bookcrossing.Data.Repositories.Interface
 {
     public interface IPublisherRepository : IRepositoryBase<Publisher>
     {
-        Task<IReadOnlyCollection<Publisher>> GetAsync(AuthorPublisherParams parametrs, CancellationToken ct = default);
+        Task<IReadOnlyCollection<Publisher>> GetAsync(RequestFeatures parametrs, CancellationToken ct = default);
     }
 }
