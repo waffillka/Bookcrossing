@@ -32,7 +32,8 @@ namespace Bookcrossing.Application.Configuration
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PipelineValidationBehavior<,>));
 
             services.Scan(
-                x => {
+                x =>
+                {
                     var assemby = Assembly.GetExecutingAssembly();
 
                     x.FromAssemblies(assemby)

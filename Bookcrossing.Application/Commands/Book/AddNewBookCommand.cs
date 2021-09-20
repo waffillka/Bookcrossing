@@ -26,7 +26,7 @@ namespace Bookcrossing.Application.Commands.Book
         private readonly IMapper _mapper;
 
         public AddNewBookCommandHandler(IBookRepository bookRepository, IMapper mapper, ILoggerManager logger)
-            :base(logger)
+            : base(logger)
         {
             _bookRepository = bookRepository;
             _mapper = mapper;

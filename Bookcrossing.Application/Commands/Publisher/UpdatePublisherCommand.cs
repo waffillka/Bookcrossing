@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Commands.Publisher
 {
-    public class UpdatePublisherCommand: IRequest<PublisherLookUpDto>
+    public class UpdatePublisherCommand : IRequest<PublisherLookUpDto>
     {
         public UpdatePublisherCommand(Guid id, PublisherCreationDto publisher)
         {

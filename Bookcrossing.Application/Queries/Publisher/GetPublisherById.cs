@@ -17,7 +17,7 @@ namespace Bookcrossing.Application.Queries.Publisher
             PublisherId = id;
         }
 
-        public Guid PublisherId {get;}
+        public Guid PublisherId { get; }
     }
 
     public class GetPublisherByIdHandler : LoggerRequestHandler<GetPublisherById, PublisherDeteilsDto>
