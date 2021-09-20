@@ -18,7 +18,6 @@ namespace Bookcrossing.Data.DbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Book>()
                 .HasOne(c => c.Owner)
                 .WithMany(o => o.OwnerBook);
@@ -26,6 +25,10 @@ namespace Bookcrossing.Data.DbContext
             modelBuilder.Entity<Book>()
                 .HasOne(c => c.Recipient)
                 .WithMany(o => o.BookRecipient);
-        }
+
+            modelBuilder.RegisterSoftDeleteQueryFilter();
+
+            base.OnModelCreating(modelBuilder);
+        }        
     }
 }
