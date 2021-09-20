@@ -16,7 +16,7 @@ namespace Bookcrossing.Application.Handler
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
-            _logger.LogInfo($"Command is {nameof(TRequest)}, {request} return {nameof(TResponse)}");
+            _logger.LogInfo($"Command is {typeof(TRequest)} return {typeof(TResponse)}");
 
             return HandleInternalAsync(request, cancellationToken);
         }
