@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Bookcrossing.Application.Handler;
+using Bookcrossing.Application.Logger;
 using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using Bookcrossing.Contracts.DataTransferObjects.Deteils;
 using Bookcrossing.Data.Repositories.Interface;
@@ -21,18 +23,19 @@ namespace Bookcrossing.Application.Commands.Author
         public Guid AuthorId { get; }
     }
 
-    public class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorCommand, AuthorDeteilsDto>
+    public class UpdateAuthorCommandHandler : LoggerRequestHandler<UpdateAuthorCommand, AuthorDeteilsDto>
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
 
-        public UpdateAuthorCommandHandler(IAuthorRepository authorRepository, IMapper mapper)
+        public UpdateAuthorCommandHandler(IAuthorRepository authorRepository, IMapper mapper, ILoggerManager logger)
+            : base(logger)
         {
             _authorRepository = authorRepository;
             _mapper = mapper;
         }
 
-        public async Task<AuthorDeteilsDto> Handle(UpdateAuthorCommand request, CancellationToken ct)
+        public override async Task<AuthorDeteilsDto> HandleInternalAsync(UpdateAuthorCommand request, CancellationToken ct)
         {
             var entity = await _authorRepository.GetOneByCondition(x => x.Id == request.AuthorId, ct);
 

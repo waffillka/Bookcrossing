@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Bookcrossing.Application.Handler;
+using Bookcrossing.Application.Logger;
 using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using Bookcrossing.Contracts.DataTransferObjects.Deteils;
 using Bookcrossing.Data.Repositories.Interface;
@@ -18,18 +20,19 @@ namespace Bookcrossing.Application.Commands.Publisher
         public PublisherCreationDto Publisher { get; }
     }
 
-    public class AddNewPublisherCommandHandler : IRequestHandler<AddNewPublisherCommand, PublisherDeteilsDto>
+    public class AddNewPublisherCommandHandler : LoggerRequestHandler<AddNewPublisherCommand, PublisherDeteilsDto>
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IMapper _mapper;
 
-        public AddNewPublisherCommandHandler(IPublisherRepository publisherRepository, IMapper mapper)
+        public AddNewPublisherCommandHandler(IPublisherRepository publisherRepository, IMapper mapper, ILoggerManager logger)
+            : base(logger)
         {
             _publisherRepository = publisherRepository;
             _mapper = mapper;
         }
 
-        public async Task<PublisherDeteilsDto> Handle(AddNewPublisherCommand request, CancellationToken cancellationToken)
+        public override async Task<PublisherDeteilsDto> HandleInternalAsync(AddNewPublisherCommand request, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<Data.Entities.Publisher>(request.Publisher);
             entity = await _publisherRepository.InsertAsync(entity, cancellationToken);

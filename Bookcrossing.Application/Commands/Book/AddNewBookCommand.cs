@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Bookcrossing.Application.Handler;
+using Bookcrossing.Application.Logger;
 using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using Bookcrossing.Contracts.DataTransferObjects.Deteils;
 using Bookcrossing.Data.Repositories.Interface;
@@ -24,7 +25,8 @@ namespace Bookcrossing.Application.Commands.Book
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
 
-        public AddNewBookCommandHandler(IBookRepository bookRepository, IMapper mapper)
+        public AddNewBookCommandHandler(IBookRepository bookRepository, IMapper mapper, ILoggerManager logger)
+            :base(logger)
         {
             _bookRepository = bookRepository;
             _mapper = mapper;

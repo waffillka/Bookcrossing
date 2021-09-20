@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Bookcrossing.Application.Handler;
+using Bookcrossing.Application.Logger;
 using Bookcrossing.Contracts.DataTransferObjects.Deteils;
 using Bookcrossing.Data.Repositories.Interface;
 using MediatR;
@@ -18,18 +20,19 @@ namespace Bookcrossing.Application.Queries.Publisher
         public Guid PublisherId {get;}
     }
 
-    public class GetPublisherByIdHandler : IRequestHandler<GetPublisherById, PublisherDeteilsDto>
+    public class GetPublisherByIdHandler : LoggerRequestHandler<GetPublisherById, PublisherDeteilsDto>
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IMapper _mapper;
 
-        public GetPublisherByIdHandler(IPublisherRepository publisherRepository, IMapper mapper)
+        public GetPublisherByIdHandler(IPublisherRepository publisherRepository, IMapper mapper, ILoggerManager logger)
+            : base(logger)
         {
             _publisherRepository = publisherRepository;
             _mapper = mapper;
         }
 
-        public async Task<PublisherDeteilsDto> Handle(GetPublisherById request, CancellationToken cancellationToken)
+        public override async Task<PublisherDeteilsDto> HandleInternalAsync(GetPublisherById request, CancellationToken cancellationToken)
         {
             var entity = _publisherRepository.GetOneByCondition(x => x.Id == request.PublisherId);
 

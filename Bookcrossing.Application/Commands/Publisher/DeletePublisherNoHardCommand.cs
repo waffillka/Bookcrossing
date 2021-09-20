@@ -1,4 +1,6 @@
-﻿using Bookcrossing.Data.Repositories.Interface;
+﻿using Bookcrossing.Application.Handler;
+using Bookcrossing.Application.Logger;
+using Bookcrossing.Data.Repositories.Interface;
 using MediatR;
 using System;
 using System.Threading;
@@ -16,16 +18,17 @@ namespace Bookcrossing.Application.Commands.Publisher
         public Guid Id { get; }
     }
 
-    public class DeletePublisherNoHardCommandHandler : IRequestHandler<DeletePublisherNoHardCommand>
+    public class DeletePublisherNoHardCommandHandler : LoggerRequestHandler<DeletePublisherNoHardCommand, Unit>
     {
         private IPublisherRepository _publisherRepository;
 
-        public DeletePublisherNoHardCommandHandler(IPublisherRepository publisherRepository)
+        public DeletePublisherNoHardCommandHandler(IPublisherRepository publisherRepository, ILoggerManager logger)
+            : base(logger)
         {
             _publisherRepository = publisherRepository;
         }
 
-        public async Task<Unit> Handle(DeletePublisherNoHardCommand request, CancellationToken cancellationToken)
+        public override async Task<Unit> HandleInternalAsync(DeletePublisherNoHardCommand request, CancellationToken cancellationToken)
         {
             _publisherRepository.Delete(request.Id, cancellationToken);
 

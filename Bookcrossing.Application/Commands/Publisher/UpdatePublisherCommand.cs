@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Bookcrossing.Application.Handler;
+using Bookcrossing.Application.Logger;
 using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using Bookcrossing.Contracts.DataTransferObjects.LookUp;
 using Bookcrossing.Data.Repositories.Interface;
@@ -21,17 +23,18 @@ namespace Bookcrossing.Application.Commands.Publisher
         public PublisherCreationDto Publisher { get; }
     }
 
-    public class UpdatePublisherCommandHandler : IRequestHandler<UpdatePublisherCommand, PublisherLookUpDto>
+    public class UpdatePublisherCommandHandler : LoggerRequestHandler<UpdatePublisherCommand, PublisherLookUpDto>
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IMapper _mapper;
-        public UpdatePublisherCommandHandler(IPublisherRepository publisherRepository, IMapper mapper)
+        public UpdatePublisherCommandHandler(IPublisherRepository publisherRepository, IMapper mapper, ILoggerManager logger)
+            : base(logger)
         {
             _mapper = mapper;
             _publisherRepository = publisherRepository;
         }
 
-        public async Task<PublisherLookUpDto> Handle(UpdatePublisherCommand request, CancellationToken ct)
+        public override async Task<PublisherLookUpDto> HandleInternalAsync(UpdatePublisherCommand request, CancellationToken ct)
         {
             var entity = await _publisherRepository.GetOneByCondition(x => x.Id == request.PublisherId, ct);
 
