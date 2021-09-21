@@ -28,8 +28,8 @@ namespace Bookcrossing.Host.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetWithParams([FromQuery] AuthorPublisherParams parameters)
+        [HttpGet("search")]
+        public async Task<IActionResult> GetWithParams([FromQuery] ParametersBase parameters)
         {
             var result = await _mediator.Send(new GetPublishersWithParametersQuery(parameters));
 
@@ -47,7 +47,7 @@ namespace Bookcrossing.Host.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _mediator.Send(new DeletePublisherNoHardCommand(id));
+            await _mediator.Send(new DeletePublisherCommand(id));
 
             return Ok();
         }

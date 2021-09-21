@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Commands.Publisher
 {
-    public class DeletePublisherNoHardCommand : IRequest
+    public class DeletePublisherCommand : IRequest
     {
-        public DeletePublisherNoHardCommand(Guid id)
+        public DeletePublisherCommand(Guid id)
         {
             Id = id;
         }
@@ -18,17 +18,17 @@ namespace Bookcrossing.Application.Commands.Publisher
         public Guid Id { get; }
     }
 
-    public class DeletePublisherNoHardCommandHandler : LoggerRequestHandler<DeletePublisherNoHardCommand, Unit>
+    public class DeletePublisherCommandHandler : LoggerRequestHandler<DeletePublisherCommand, Unit>
     {
         private IPublisherRepository _publisherRepository;
 
-        public DeletePublisherNoHardCommandHandler(IPublisherRepository publisherRepository, ILoggerManager logger)
+        public DeletePublisherCommandHandler(IPublisherRepository publisherRepository, ILoggerManager logger)
             : base(logger)
         {
             _publisherRepository = publisherRepository;
         }
 
-        public override async Task<Unit> HandleInternalAsync(DeletePublisherNoHardCommand request, CancellationToken cancellationToken)
+        public override async Task<Unit> HandleInternalAsync(DeletePublisherCommand request, CancellationToken cancellationToken)
         {
             _publisherRepository.Delete(request.Id, cancellationToken);
 

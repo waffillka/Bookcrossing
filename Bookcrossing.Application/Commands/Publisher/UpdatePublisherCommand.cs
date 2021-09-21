@@ -27,6 +27,7 @@ namespace Bookcrossing.Application.Commands.Publisher
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IMapper _mapper;
+
         public UpdatePublisherCommandHandler(IPublisherRepository publisherRepository, IMapper mapper, ILoggerManager logger)
             : base(logger)
         {

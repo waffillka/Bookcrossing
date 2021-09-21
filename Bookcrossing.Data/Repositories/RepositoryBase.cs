@@ -91,7 +91,7 @@ namespace Bookcrossing.Data.Repositories
             return entity.Result;
         }
 
-        public async Task<IReadOnlyCollection<TEntity>> GetAsync(RequestFeatures pagination, CancellationToken ct = default)
+        public async Task<IReadOnlyCollection<TEntity>> GetAsync(ParametersBase pagination, CancellationToken ct = default)
         {
             if (pagination == null)
             {
@@ -125,7 +125,7 @@ namespace Bookcrossing.Data.Repositories
             return entity.Entity;
         }
 
-        public async Task<IReadOnlyCollection<TEntity>> GetByCondition(Expression<Func<TEntity, bool>> expression, RequestFeatures parameters, CancellationToken ct = default)
+        public async Task<IReadOnlyCollection<TEntity>> GetByCondition(Expression<Func<TEntity, bool>> expression, ParametersBase parameters, CancellationToken ct = default)
         {
             if (parameters == null)
             {

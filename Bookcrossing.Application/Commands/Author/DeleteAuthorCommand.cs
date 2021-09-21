@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Commands.Author
 {
-    public class DeleteAuthorNoHardCommand : IRequest
+    public class DeleteAuthorCommand : IRequest
     {
-        public DeleteAuthorNoHardCommand(Guid authorId)
+        public DeleteAuthorCommand(Guid authorId)
         {
             AuthorId = authorId;
         }
@@ -18,7 +18,7 @@ namespace Bookcrossing.Application.Commands.Author
         public Guid AuthorId { get; }
     }
 
-    public class DeleteAuthorCommandHandler : LoggerRequestHandler<DeleteAuthorNoHardCommand, Unit>
+    public class DeleteAuthorCommandHandler : LoggerRequestHandler<DeleteAuthorCommand, Unit>
     {
         private readonly IAuthorRepository _authorRepository;
 
@@ -28,11 +28,11 @@ namespace Bookcrossing.Application.Commands.Author
             _authorRepository = authorRepository;
         }
 
-        public override async Task<Unit> HandleInternalAsync(DeleteAuthorNoHardCommand request, CancellationToken ct)
+        public override async Task<Unit> HandleInternalAsync(DeleteAuthorCommand request, CancellationToken ct)
         {
             _authorRepository.Delete(request.AuthorId, ct);
 
             return Unit.Value;
-        }      
+        }
     }
 }

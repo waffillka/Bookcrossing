@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Queries.Publisher
 {
-    public class GetPublishersWithParametersQuery : IRequest<ICollection<PublisherLookUpDto>>
+    public class GetPublishersWithParametersQuery : IRequest<IReadOnlyCollection<PublisherLookUpDto>>
     {
-        public GetPublishersWithParametersQuery(AuthorPublisherParams publisherParams)
+        public GetPublishersWithParametersQuery(ParametersBase publisherParams)
         {
             Params = publisherParams;
         }
 
-        public AuthorPublisherParams Params { get; }
+        public ParametersBase Params { get; }
     }
 
-    public class GetPublishersWithParametersQueryHandler : LoggerRequestHandler<GetPublishersWithParametersQuery, ICollection<PublisherLookUpDto>>
+    public class GetPublishersWithParametersQueryHandler : LoggerRequestHandler<GetPublishersWithParametersQuery, IReadOnlyCollection<PublisherLookUpDto>>
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IMapper _mapper;
@@ -33,10 +33,10 @@ namespace Bookcrossing.Application.Queries.Publisher
             _mapper = mapper;
         }
 
-        public override async Task<ICollection<PublisherLookUpDto>> HandleInternalAsync(GetPublishersWithParametersQuery request, CancellationToken ct)
+        public override async Task<IReadOnlyCollection<PublisherLookUpDto>> HandleInternalAsync(GetPublishersWithParametersQuery request, CancellationToken ct)
         {
             var entities = await _publisherRepository.GetAsync(request.Params, ct);
-            var result = _mapper.Map<ICollection<PublisherLookUpDto>>(entities);
+            var result = _mapper.Map<IReadOnlyCollection<PublisherLookUpDto>>(entities);
 
             return result;
         }

@@ -2,9 +2,8 @@
 
 namespace Bookcrossing.Contracts.Abstractions.RequestFeatures
 {
-    public class BookParams : RequestFeatures
+    public class BookParams : ParametersBase
     {
-        public string SearchString { get; set; } = string.Empty;
         public ICollection<string> Authors { get; set; }
         public ICollection<string> Publishers { get; set; }
         public bool IsFree { get; set; }

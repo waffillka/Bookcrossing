@@ -29,6 +29,6 @@ namespace Bookcrossing.Data.DbContext
             modelBuilder.RegisterSoftDeleteQueryFilter();
 
             base.OnModelCreating(modelBuilder);
-        }        
+        }
     }
 }

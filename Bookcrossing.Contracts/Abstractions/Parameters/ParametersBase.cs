@@ -2,11 +2,12 @@
 
 namespace Bookcrossing.Contracts.Abstractions.RequestFeatures
 {
-    public abstract class RequestFeatures
+    public abstract class ParametersBase
     {
         private const int MaxPageSize = 100;
         private int _pageSize = 10;
 
+        public string SearchString { get; set; } = string.Empty;
         public int PageNumber { get; set; } = 1;
         public Order OrderBy { get; set; } = Order.Asc;
         public int PageSize

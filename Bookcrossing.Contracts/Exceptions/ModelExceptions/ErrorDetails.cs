@@ -2,7 +2,7 @@
 
 namespace Bookcrossing.Contracts.Exceptions.ModelExceptions
 {
-    public class ErrorDetails
+    public record ErrorDetails
     {
         public int StatusCode { get; set; }
         public string Message { get; set; }

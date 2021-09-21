@@ -30,12 +30,12 @@ namespace Bookcrossing.Host.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthor(Guid id)
         {
-            await _mediator.Send(new DeleteAuthorNoHardCommand(id));
+            await _mediator.Send(new DeleteAuthorCommand(id));
             return Ok();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAuthors([FromQuery] AuthorPublisherParams parameters)
+        [HttpGet("search")]
+        public async Task<IActionResult> GetAuthors([FromQuery] ParametersBase parameters)
         {
             var entities = await _mediator.Send(new GetAthorsWithParametersQuery(parameters));
 

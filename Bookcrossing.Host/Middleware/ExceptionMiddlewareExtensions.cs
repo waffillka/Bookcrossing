@@ -25,14 +25,14 @@ namespace Bookcrossing.Host.Middleware
 
                         switch (contextFeature.Error)
                         {
-                            
+
                             default:
                                 {
                                     await context.Response.WriteAsync(new ErrorDetails()
                                     {
                                         StatusCode = context.Response.StatusCode,
                                         Message = "Internal Server Error."
-                                    }.ToString()).ConfigureAwait(false);
+                                    }.ToString());
                                     break;
                                 }
                         }

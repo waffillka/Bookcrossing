@@ -35,7 +35,7 @@ namespace Bookcrossing.Application.Commands.Author
         public override async Task<AuthorDeteilsDto> HandleInternalAsync(AddNewAuthorCommand request, CancellationToken ct)
         {
             var entity = _mapper.Map<Data.Entities.Author>(request.Author);
-            entity = await _authorRepository.InsertAsync(entity, ct);
+            await _authorRepository.InsertAsync(entity, ct);
             var result = _mapper.Map<AuthorDeteilsDto>(entity);
 
             return result;

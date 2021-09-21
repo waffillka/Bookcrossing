@@ -17,7 +17,7 @@ namespace Bookcrossing.Data.Repositories
             : base(dbContext)
         { }
 
-        public async Task<IReadOnlyCollection<Publisher>> GetAsync(AuthorPublisherParams parameters, CancellationToken ct = default)
+        public async Task<IReadOnlyCollection<Publisher>> GetAsync(ParametersBase parameters, CancellationToken ct = default)
         {
             parameters.SearchString ??= string.Empty;
             var entities = DbContext.Publishers.Where(x => x.Name.Contains(parameters.SearchString));

@@ -41,7 +41,6 @@ namespace Bookcrossing.Application.Commands.Book
 
             _mapper.Map(request.Book, entity);
 
-
             await _bookRepository.SaveAsync(ct);
             var result = _mapper.Map<BookDeteilsDto>(entity);
 

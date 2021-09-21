@@ -9,11 +9,11 @@ namespace Bookcrossing.Data.Configuration
     {
         public static void AddBookcrossingData(this IServiceCollection services, string connectionString)
         {
-            services.ConfigureSqlContext(connectionString);
+            services.ConfigureDbContext(connectionString);
             services.RegisterRepositories();
         }
 
-        private static void ConfigureSqlContext(this IServiceCollection services, string connectionString)
+        private static void ConfigureDbContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<BookcrossingDbContext>(opts =>
                 opts.UseLazyLoadingProxies()
