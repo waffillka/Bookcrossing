@@ -29,7 +29,6 @@ namespace Bookcrossing.Application.Validators.Pipeline
             {
                 var error = string.Join("\r\n", validationFailures);
 
-                //TODO 1 Change exception
                 throw new ArgumentException(error);
             }
 

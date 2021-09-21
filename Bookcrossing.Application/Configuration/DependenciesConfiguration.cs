@@ -25,7 +25,6 @@ namespace Bookcrossing.Application.Configuration
 
         private static void RegisterFluentValidation(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly())
                 .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
 
