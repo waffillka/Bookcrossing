@@ -1,12 +1,11 @@
-﻿using Bookcrossing.Contracts.Abstractions.BrokerModels;
+﻿using Notification.Contracts.Abstractions.Broker;
 using System;
 using System.Collections.Generic;
 
-namespace Bookcrossing.Contracts.DataTransferObjects.Broker
+namespace Notification.Contracts.DataTransferObject.Broker
 {
-    public class BrokerMessage : IBrokerMessage
+    public class Subscription : ISubscription
     {
-        public string Value { get; set; }
         public Guid UserId { get; set; }
         public string UserName { get; set; }
         public string UserNickname { get; set; }
@@ -15,6 +14,5 @@ namespace Bookcrossing.Contracts.DataTransferObjects.Broker
         public string BookName { get; set; }
         public string BookISBIN { get; set; }
         public ICollection<string> Authors { get; set; }
-        public string Command { get; set; }
     }
 }
