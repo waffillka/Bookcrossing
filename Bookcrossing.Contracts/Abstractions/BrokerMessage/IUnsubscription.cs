@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Notification.Contracts.Abstractions.Broker
+namespace Bookcrossing.Contracts.Abstractions.BrokerModels
 {
     public interface IUnsubscription
     {

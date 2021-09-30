@@ -1,8 +1,8 @@
-﻿using Notification.Contracts.Abstractions.Broker;
+﻿using Bookcrossing.Contracts.Abstractions.BrokerModels;
 using System;
 using System.Collections.Generic;
 
-namespace Notification.Contracts.DataTransferObject.Broker
+namespace Bookcrossing.Contracts.DataTransferObjects.Broker
 {
     public class Subscription : ISubscription
     {

@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Commands.Broker
 {
-    public class PublishBrokerMessageCommand : IRequest
+    public class SubscriptionCommand : IRequest
     {
-        public PublishBrokerMessageCommand(BrokerMessage message)
+        public SubscriptionCommand(Subscription message)
         {
             Message = message;
         }
 
-        public BrokerMessage Message { get; }
+        public Subscription Message { get; }
     }
 
-    public class PublishBrokerMessageCommandHandler : LoggerRequestHandler<PublishBrokerMessageCommand, Unit>
+    public class SubscriptionCommandHandler : LoggerRequestHandler<NotificationCommand, Unit>
     {
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public PublishBrokerMessageCommandHandler(ILoggerManager logger, IPublishEndpoint publishEndpoint)
+        public SubscriptionCommandHandler(ILoggerManager logger, IPublishEndpoint publishEndpoint)
             : base(logger)
         {
             _publishEndpoint = publishEndpoint;
         }
 
-        public override async Task<Unit> HandleInternalAsync(PublishBrokerMessageCommand request, CancellationToken ct)
+        public override async Task<Unit> HandleInternalAsync(NotificationCommand request, CancellationToken ct)
         {
             await _publishEndpoint.Publish(request.Message);
             return Unit.Value;

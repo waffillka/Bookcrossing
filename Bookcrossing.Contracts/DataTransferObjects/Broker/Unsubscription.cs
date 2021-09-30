@@ -1,7 +1,7 @@
-﻿using Notification.Contracts.Abstractions.Broker;
+﻿using Bookcrossing.Contracts.Abstractions.BrokerModels;
 using System;
 
-namespace Notification.Contracts.DataTransferObject.Broker
+namespace Bookcrossing.Contracts.DataTransferObjects.Broker
 {
     public class Unsubscription : IUnsubscription
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Notification.Contracts.Abstractions.Broker
+namespace Bookcrossing.Contracts.Abstractions.BrokerModels
 {
     public interface ISubscription
     {
