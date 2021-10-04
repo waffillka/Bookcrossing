@@ -3,6 +3,7 @@ using Bookcrossing.Application.Logger;
 using Bookcrossing.Contracts.DataTransferObjects.Broker;
 using MassTransit;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,6 +14,14 @@ namespace Bookcrossing.Application.Commands.Broker
         public NotificationCommand(Notification message)
         {
             Message = message;
+        }
+
+        public NotificationCommand(Guid bookId)
+        {
+            Message = new Notification()
+            {
+                BookId = bookId
+            };
         }
 
         public Notification Message { get; }

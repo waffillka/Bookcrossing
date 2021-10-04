@@ -3,6 +3,7 @@ using Bookcrossing.Application.Logger;
 using Bookcrossing.Contracts.DataTransferObjects.Broker;
 using MassTransit;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,6 +14,15 @@ namespace Bookcrossing.Application.Commands.Broker
         public UnsubscriptionCommand(Unsubscription message)
         {
             Message = message;
+        }
+
+        public UnsubscriptionCommand(Guid userId, Guid bookId)
+        {
+            Message = new Unsubscription()
+            {
+                UserId = userId,
+                BookId = bookId
+            };
         }
 
         public Unsubscription Message { get; }
