@@ -9,7 +9,7 @@ namespace Bookcrossing.Contracts.Abstractions.BrokerModels
         string UserName { get; set; }
         string UserNickname { get; set; }
         string UserEmail { get; set; }
-
+        DateTime SubscriptionDate { get; set; }
         Guid BookId { get; set; }
         string BookName { get; set; }
         string BookISBIN { get; set; }
