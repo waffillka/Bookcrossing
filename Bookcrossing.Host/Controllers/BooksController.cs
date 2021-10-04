@@ -3,9 +3,7 @@ using Bookcrossing.Application.Queries.Book;
 using Bookcrossing.Contracts.Abstractions.RequestFeatures;
 using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Threading.Tasks;
 
@@ -38,8 +36,6 @@ namespace Bookcrossing.Host.Controllers
             return Ok(result);
         }
 
-        [SwaggerResponse(StatusCodes.Status200OK)]
-        [SwaggerOperation(Summary = "Get an alert definition by Id", OperationId = "GetAlertDefinitionById")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNoHardBook([FromQuery] Guid id)
         {
