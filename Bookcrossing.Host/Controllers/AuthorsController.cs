@@ -20,14 +20,14 @@ namespace Bookcrossing.Host.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateAuthor([FromBody] AuthorCreationDto author)
         {
             var result = await _mediator.Send(new AddNewAuthorCommand(author));
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteAuthor(Guid id)
         {
             await _mediator.Send(new DeleteAuthorCommand(id));
@@ -50,7 +50,7 @@ namespace Bookcrossing.Host.Controllers
             return Ok(entities);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateAuthor(Guid id, [FromBody] AuthorCreationDto author)
         {
             var result = await _mediator.Send(new UpdateAuthorCommand(id, author));

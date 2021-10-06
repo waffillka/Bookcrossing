@@ -21,7 +21,7 @@ namespace Bookcrossing.Host.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetWithParams(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
             var result = await _mediator.Send(new GetBookById(id));
 
@@ -36,7 +36,7 @@ namespace Bookcrossing.Host.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteNoHardBook([FromQuery] Guid id)
         {
             var result = await _mediator.Send(new DeleteBookCommand(id));
@@ -44,14 +44,14 @@ namespace Bookcrossing.Host.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateBook([FromBody] BookCreationDto book)
         {
             var result = await _mediator.Send(new AddNewBookCommand(book));
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] BookCreationDto book)
         {
             var result = await _mediator.Send(new UpdateBookCommand(id, book));
