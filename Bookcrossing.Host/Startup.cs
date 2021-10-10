@@ -4,6 +4,7 @@ using Bookcrossing.Data.Configuration;
 using Bookcrossing.Host.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,7 +27,23 @@ namespace Bookcrossing.Host
             services.AddBookcrossingData(Configuration.GetConnectionString("sqlConnection"));
             services.AddBookcrossingApplication();
 
-            services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            });
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
+            services.AddControllers(config => { })
+                    .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                    .AddXmlDataContractSerializerFormatters();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bookcrossing", Version = "v1" });
@@ -46,7 +63,7 @@ namespace Bookcrossing.Host
 
             app.ConfigureExceptionHandler(logger);
             app.UseHttpsRedirection();
-
+            app.UseCors("CorsPolicy");
             app.UseRouting();
 
             app.UseAuthorization();

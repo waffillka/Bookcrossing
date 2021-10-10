@@ -10,6 +10,7 @@ namespace Bookcrossing.Data.Entities
         public Book()
         {
             Authors = new List<Author>();
+            Subscribe = new List<User>();
         }
 
         [Required]
@@ -26,6 +27,7 @@ namespace Bookcrossing.Data.Entities
         public virtual User Recipient { get; set; }
 
         public virtual ICollection<Author> Authors { get; set; }
+        public virtual ICollection<User> Subscribe { get; set; }
 
         [NotMapped]
         public bool Free => RecipientId == null;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Host.Controllers
 {
-    [Route("api/publisher")]
+    [Route("publisher")]
     [ApiController]
     public class PublisherController : ControllerBase
     {
@@ -36,7 +36,7 @@ namespace Bookcrossing.Host.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreatePublisher([FromBody] PublisherCreationDto publisher)
         {
             var result = await _mediator.Send(new AddNewPublisherCommand(publisher));
@@ -44,7 +44,7 @@ namespace Bookcrossing.Host.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _mediator.Send(new DeletePublisherCommand(id));
@@ -52,7 +52,7 @@ namespace Bookcrossing.Host.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] PublisherCreationDto publisher)
         {
             var result = await _mediator.Send(new UpdatePublisherCommand(id, publisher));

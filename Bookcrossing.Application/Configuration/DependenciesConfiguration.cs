@@ -2,6 +2,7 @@
 using Bookcrossing.Application.Mapping;
 using Bookcrossing.Application.Validators.Pipeline;
 using FluentValidation;
+using MassTransit;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -16,6 +17,7 @@ namespace Bookcrossing.Application.Configuration
             services.RegisterMapping();
             services.RegisterFluentValidation();
             services.RegisterLogger();
+            services.AddMassTransit();
         }
 
         private static void RegisterMediator(this IServiceCollection services)
@@ -52,6 +54,21 @@ namespace Bookcrossing.Application.Configuration
         private static void RegisterLogger(this IServiceCollection services)
         {
             services.AddScoped<ILoggerManager, LoggerManager>();
+        }
+
+        private static void AddMassTransit(this IServiceCollection services)
+        {
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.ReceiveEndpoint("event-listener", e =>
+                    {
+                    });
+                });
+            });
+
+            services.AddMassTransitHostedService();
         }
     }
 }
