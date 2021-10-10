@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Host.Controllers
 {
-    [Route("api/books")]
+    [Route("books")]
     [ApiController]
     public class BooksController : ControllerBase
     {

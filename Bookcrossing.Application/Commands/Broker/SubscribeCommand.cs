@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Commands.Broker
 {
-    public class SubscriptionCommand : IRequest
+    public class SubscribeCommand : IRequest
     {
-        public SubscriptionCommand(Subscription message)
+        public SubscribeCommand(Subscription message)
         {
             Message = message;
         }
@@ -18,7 +18,7 @@ namespace Bookcrossing.Application.Commands.Broker
         public Subscription Message { get; }
     }
 
-    public class SubscriptionCommandHandler : LoggerRequestHandler<NotificationCommand, Unit>
+    public class SubscriptionCommandHandler : LoggerRequestHandler<NotifyCommand, Unit>
     {
         private readonly IPublishEndpoint _publishEndpoint;
 
@@ -28,7 +28,7 @@ namespace Bookcrossing.Application.Commands.Broker
             _publishEndpoint = publishEndpoint;
         }
 
-        public override async Task<Unit> HandleInternalAsync(NotificationCommand request, CancellationToken ct)
+        public override async Task<Unit> HandleInternalAsync(NotifyCommand request, CancellationToken ct)
         {
             await _publishEndpoint.Publish(request.Message);
             return Unit.Value;

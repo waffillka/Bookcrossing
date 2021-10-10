@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Commands.Broker
 {
-    public class UnsubscriptionCommand : IRequest
+    public class UnsubscribeCommand : IRequest
     {
-        public UnsubscriptionCommand(Unsubscription message)
+        public UnsubscribeCommand(Unsubscription message)
         {
             Message = message;
         }
 
-        public UnsubscriptionCommand(Guid userId, Guid bookId)
+        public UnsubscribeCommand(Guid userId, Guid bookId)
         {
             Message = new Unsubscription()
             {
@@ -28,7 +28,7 @@ namespace Bookcrossing.Application.Commands.Broker
         public Unsubscription Message { get; }
     }
 
-    public class UnsubscriptionCommandHandler : LoggerRequestHandler<UnsubscriptionCommand, Unit>
+    public class UnsubscriptionCommandHandler : LoggerRequestHandler<UnsubscribeCommand, Unit>
     {
         private readonly IPublishEndpoint _publishEndpoint;
 
@@ -38,7 +38,7 @@ namespace Bookcrossing.Application.Commands.Broker
             _publishEndpoint = publishEndpoint;
         }
 
-        public override async Task<Unit> HandleInternalAsync(UnsubscriptionCommand request, CancellationToken ct)
+        public override async Task<Unit> HandleInternalAsync(UnsubscribeCommand request, CancellationToken ct)
         {
             await _publishEndpoint.Publish(request.Message);
             return Unit.Value;
