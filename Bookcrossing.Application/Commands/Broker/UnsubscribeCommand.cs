@@ -28,7 +28,7 @@ namespace Bookcrossing.Application.Commands.Broker
         public Unsubscription Message { get; }
     }
 
-    public class UnsubscriptionCommandHandler : LoggerRequestHandler<UnsubscribeCommand, Unit>
+    public class UnsubscriptionCommandHandler : BaseRequestHandler<UnsubscribeCommand, Unit>
     {
         private readonly IPublishEndpoint _publishEndpoint;
 

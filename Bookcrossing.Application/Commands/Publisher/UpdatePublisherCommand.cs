@@ -23,7 +23,7 @@ namespace Bookcrossing.Application.Commands.Publisher
         public PublisherCreationDto Publisher { get; }
     }
 
-    public class UpdatePublisherCommandHandler : LoggerRequestHandler<UpdatePublisherCommand, PublisherLookUpDto>
+    public class UpdatePublisherCommandHandler : BaseRequestHandler<UpdatePublisherCommand, PublisherLookUpDto>
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IMapper _mapper;

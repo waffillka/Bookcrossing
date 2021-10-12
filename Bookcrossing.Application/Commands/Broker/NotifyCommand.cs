@@ -27,7 +27,7 @@ namespace Bookcrossing.Application.Commands.Broker
         public Notification Message { get; }
     }
 
-    public class NotificationCommandHandler : LoggerRequestHandler<NotifyCommand, Unit>
+    public class NotificationCommandHandler : BaseRequestHandler<NotifyCommand, Unit>
     {
         private readonly IPublishEndpoint _publishEndpoint;
 

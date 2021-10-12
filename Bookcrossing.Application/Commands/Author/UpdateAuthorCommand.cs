@@ -23,7 +23,7 @@ namespace Bookcrossing.Application.Commands.Author
         public Guid AuthorId { get; }
     }
 
-    public class UpdateAuthorCommandHandler : LoggerRequestHandler<UpdateAuthorCommand, AuthorDeteilsDto>
+    public class UpdateAuthorCommandHandler : BaseRequestHandler<UpdateAuthorCommand, AuthorDeteilsDto>
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;

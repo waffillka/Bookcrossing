@@ -20,7 +20,7 @@ namespace Bookcrossing.Application.Queries.Book
         public Guid Id { get; }
     }
 
-    public class GetBookByIdHandler : LoggerRequestHandler<GetBookById, BookDeteilsDto>
+    public class GetBookByIdHandler : BaseRequestHandler<GetBookById, BookDeteilsDto>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;

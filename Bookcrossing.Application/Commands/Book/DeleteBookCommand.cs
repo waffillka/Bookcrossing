@@ -18,7 +18,7 @@ namespace Bookcrossing.Application.Commands.Book
         public Guid BookId { get; }
     }
 
-    public class DeleteBookCommandHandler : LoggerRequestHandler<DeleteBookCommand, Unit>
+    public class DeleteBookCommandHandler : BaseRequestHandler<DeleteBookCommand, Unit>
     {
         private readonly IBookRepository _bookRepository;
 

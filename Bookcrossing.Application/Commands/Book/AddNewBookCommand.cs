@@ -20,7 +20,7 @@ namespace Bookcrossing.Application.Commands.Book
         public BookCreationDto Book { get; }
     }
 
-    public class AddNewBookCommandHandler : LoggerRequestHandler<AddNewBookCommand, BookDeteilsDto>
+    public class AddNewBookCommandHandler : BaseRequestHandler<AddNewBookCommand, BookDeteilsDto>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;

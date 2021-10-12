@@ -21,7 +21,7 @@ namespace Bookcrossing.Application.Commands.Book
         public BookParams Parameters { get; }
     }
 
-    public class GetBooksWithParametersQueryHandler : LoggerRequestHandler<GetBooksWithParametersQuery, IReadOnlyCollection<BookLookUpDto>>
+    public class GetBooksWithParametersQueryHandler : BaseRequestHandler<GetBooksWithParametersQuery, IReadOnlyCollection<BookLookUpDto>>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;

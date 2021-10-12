@@ -23,7 +23,7 @@ namespace Bookcrossing.Application.Commands.Book
         public BookCreationDto Book { get; }
     }
 
-    public class UpdateBookCommandHandler : LoggerRequestHandler<UpdateBookCommand, BookDeteilsDto>
+    public class UpdateBookCommandHandler : BaseRequestHandler<UpdateBookCommand, BookDeteilsDto>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;

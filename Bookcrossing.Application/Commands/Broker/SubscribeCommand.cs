@@ -18,7 +18,7 @@ namespace Bookcrossing.Application.Commands.Broker
         public Subscription Message { get; }
     }
 
-    public class SubscriptionCommandHandler : LoggerRequestHandler<NotifyCommand, Unit>
+    public class SubscriptionCommandHandler : BaseRequestHandler<NotifyCommand, Unit>
     {
         private readonly IPublishEndpoint _publishEndpoint;
 

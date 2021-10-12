@@ -20,7 +20,7 @@ namespace Bookcrossing.Application.Commands.Publisher
         public PublisherCreationDto Publisher { get; }
     }
 
-    public class AddNewPublisherCommandHandler : LoggerRequestHandler<AddNewPublisherCommand, PublisherDeteilsDto>
+    public class AddNewPublisherCommandHandler : BaseRequestHandler<AddNewPublisherCommand, PublisherDeteilsDto>
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IMapper _mapper;

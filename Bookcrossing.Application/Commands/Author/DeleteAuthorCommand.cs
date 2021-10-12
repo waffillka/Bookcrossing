@@ -18,7 +18,7 @@ namespace Bookcrossing.Application.Commands.Author
         public Guid AuthorId { get; }
     }
 
-    public class DeleteAuthorCommandHandler : LoggerRequestHandler<DeleteAuthorCommand, Unit>
+    public class DeleteAuthorCommandHandler : BaseRequestHandler<DeleteAuthorCommand, Unit>
     {
         private readonly IAuthorRepository _authorRepository;
 
