@@ -3,12 +3,14 @@ using Bookcrossing.Application.Queries.Author;
 using Bookcrossing.Contracts.Abstractions.RequestFeatures;
 using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace Bookcrossing.Host.Controllers
 {
+    [Authorize]
     [Route("author")]
     [ApiController]
     public class AuthorsController : ControllerBase
