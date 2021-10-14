@@ -39,6 +39,7 @@ namespace Bookcrossing.Host.Controllers
         [HttpGet("search")]
         public async Task<IActionResult> GetAuthors([FromQuery] ParametersBase parameters)
         {
+            var token = HttpContext.Request.Headers;
             var entities = await _mediator.Send(new GetAthorsWithParametersQuery(parameters));
 
             return Ok(entities);
