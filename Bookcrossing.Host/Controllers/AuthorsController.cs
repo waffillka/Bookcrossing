@@ -1,6 +1,7 @@
 ﻿using Bookcrossing.Application.Commands.Author;
 using Bookcrossing.Application.Queries.Author;
 using Bookcrossing.Contracts.Abstractions.RequestFeatures;
+using Bookcrossing.Contracts.Context.TokenContext;
 using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,15 +12,16 @@ using System.Threading.Tasks;
 namespace Bookcrossing.Host.Controllers
 {
     [Authorize]
-    [Route("author")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AuthorsController : ControllerBase
     {
         private readonly IMediator _mediator;
-
-        public AuthorsController(IMediator mediator)
+        private readonly IClientUserContext _clientUserContext;
+        public AuthorsController(IMediator mediator, IClientUserContext clientUserContext)
         {
             _mediator = mediator;
+            _clientUserContext = clientUserContext;
         }
 
         [HttpPost("create")]
@@ -39,7 +41,6 @@ namespace Bookcrossing.Host.Controllers
         [HttpGet("search")]
         public async Task<IActionResult> GetAuthors([FromQuery] ParametersBase parameters)
         {
-            var token = HttpContext.Request.Headers;
             var entities = await _mediator.Send(new GetAthorsWithParametersQuery(parameters));
 
             return Ok(entities);
