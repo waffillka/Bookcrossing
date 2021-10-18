@@ -1,5 +1,6 @@
 using Bookcrossing.Application.Configuration;
 using Bookcrossing.Application.Logger;
+using Bookcrossing.Contracts.Context.TokenContext;
 using Bookcrossing.Contracts.Settings;
 using Bookcrossing.Data.Configuration;
 using Bookcrossing.Host.Filters;
@@ -33,6 +34,7 @@ namespace Bookcrossing.Host
         {
             services.AddBookcrossingData(Configuration.GetConnectionString("sqlConnection"));
             services.AddBookcrossingApplication();
+            services.AddScoped<IClientUserContext, ClientUserContext>();
 
             services.AddResponseCompression();
             services.AddCors(options =>
@@ -55,7 +57,7 @@ namespace Bookcrossing.Host
             });
 
             Authentication appSettings = GetAppSettings();
-            
+
             AddAuthenticationSettings(services, appSettings);
 
             if (Configuration.GetValue<bool>("IsSwaggerEnabled"))// appSettings.IsSwaggerEnabled)
@@ -112,21 +114,15 @@ namespace Bookcrossing.Host
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bookcrossing v1"));
             }
 
-
             app.ConfigureExceptionHandler(logger);
-
             app.UseCors(builder => builder
                                  .AllowAnyOrigin()
                                  .AllowAnyMethod()
                                  .AllowAnyHeader());
-
-            
-
-            
             app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization();
-
+            app.RegisteMiddleware();
             app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {
@@ -143,24 +139,8 @@ namespace Bookcrossing.Host
                         options.RequireHttpsMetadata = false;//authSettings.RequireHttpsMetadata;
                         options.ApiName = "BackEndApp_api"; // authSettings.Audience;
                         options.SaveToken = true;
+
                     });
-
-            //services.AddAuthentication("Bearer")
-            //    .AddOAuth2Introspection(options =>
-            //    {
-            //        options.Authority = "https://localhost:44310";
-            //        //options.ClientSecret = "secret";
-            //        options.ClientId = "ClientApp";
-            //        //options.IntrospectionEndpoint = "http://localhost:5000";
-            //    })
-            //    .AddIdentityServerAuthentication(options =>
-            //    {
-            //        options.Authority = "https://localhost:44310";
-            //        options.RequireHttpsMetadata = false;
-
-            //        options.SupportedTokens = SupportedTokens.Both;
-            //        options.ApiName = "BackEndApp_api";
-            //    });
         }
 
         private Authentication GetAppSettings()
