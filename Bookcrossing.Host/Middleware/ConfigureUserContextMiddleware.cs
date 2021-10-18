@@ -29,14 +29,14 @@ namespace Bookcrossing.Host.Middleware
 
                 var tokenS = jsonToken as JwtSecurityToken;
 
-                
+
                 clientUserContext.Name = tokenS.Claims?.FirstOrDefault(x => x.Type.Equals("name", StringComparison.OrdinalIgnoreCase))?.Value;
                 clientUserContext.Email = tokenS.Claims?.FirstOrDefault(x => x.Type.Equals("email", StringComparison.OrdinalIgnoreCase))?.Value;
                 clientUserContext.UserId = Guid.Parse(tokenS.Claims?.FirstOrDefault(x => x.Type.Equals("sub", StringComparison.OrdinalIgnoreCase))?.Value);
                 clientUserContext.Role = tokenS.Claims?.FirstOrDefault(x => x.Type.Equals("role", StringComparison.OrdinalIgnoreCase))?.Value;
                 clientUserContext.Phone = tokenS.Claims?.FirstOrDefault(x => x.Type.Equals("phone_number", StringComparison.OrdinalIgnoreCase))?.Value;
                 clientUserContext.NickName = tokenS.Claims?.FirstOrDefault(x => x.Type.Equals("preferred_username", StringComparison.OrdinalIgnoreCase))?.Value;
-             }
+            }
 
             await _next.Invoke(httpContext);
         }

@@ -2,7 +2,7 @@
 
 namespace Bookcrossing.Contracts.Context.TokenContext
 {
-    public class ClientUserContext: IClientUserContext
+    public class ClientUserContext : IClientUserContext
     {
         public Guid UserId { get; set; }
         public string Email { get; set; }
