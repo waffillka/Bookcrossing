@@ -46,6 +46,14 @@ namespace Bookcrossing.Host.Controllers
             return Ok(entities);
         }
 
+        [HttpGet("count")]
+        public async Task<IActionResult> GetCountAuthors([FromQuery] ParametersBase parameters)
+        {
+            var count = await _mediator.Send(new GetCountAuthorsQuery(parameters));
+
+            return Ok(count);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAuthors(Guid id)
         {

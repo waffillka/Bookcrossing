@@ -36,6 +36,14 @@ namespace Bookcrossing.Host.Controllers
             return Ok(result);
         }
 
+        [HttpGet("count")]
+        public async Task<IActionResult> GetCountBooks([FromQuery] BookParams parameters)
+        {
+            var count = await _mediator.Send(new GetCountBooksQuery(parameters));
+
+            return Ok(count);
+        }
+
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteNoHardBook([FromQuery] Guid id)
         {
