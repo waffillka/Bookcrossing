@@ -6,5 +6,6 @@ namespace Bookcrossing.Contracts.DataTransferObjects.LookUp
     {
         public Guid id { get; set; }
         public string Name { get; set; }
+        public DateTime Birthday { get; set; }
     }
 }
