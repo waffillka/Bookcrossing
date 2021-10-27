@@ -9,5 +9,6 @@ namespace Bookcrossing.Data.Repositories.Interface
     public interface IAuthorRepository : IRepositoryBase<Author>
     {
         Task<IReadOnlyCollection<Author>> GetAsync(ParametersBase parametrs, CancellationToken ct = default);
+        Task<long> GetCount(ParametersBase parameters, CancellationToken ct = default);
     }
 }

@@ -9,5 +9,6 @@ namespace Bookcrossing.Data.Repositories.Interface
     public interface IBookRepository : IRepositoryBase<Book>
     {
         Task<IReadOnlyCollection<Book>> GetAsync(BookParams parameters, CancellationToken ct = default);
+        Task<long> GetCountAsync(BookParams parameters, CancellationToken ct = default);
     }
 }

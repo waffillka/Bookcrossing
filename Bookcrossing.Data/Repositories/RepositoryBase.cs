@@ -17,7 +17,7 @@ namespace Bookcrossing.Data.Repositories
     {
         protected BookcrossingDbContext DbContext { get; }
 
-        public RepositoryBase(BookcrossingDbContext dbContext)
+        protected RepositoryBase(BookcrossingDbContext dbContext)
         {
             DbContext = dbContext;
         }
@@ -60,7 +60,7 @@ namespace Bookcrossing.Data.Repositories
                 }
             }
 
-            SaveAsync(ct);
+            await SaveAsync(ct);
         }
 
         public async Task Delete(Guid id, CancellationToken ct = default, bool hard = false)
@@ -86,7 +86,7 @@ namespace Bookcrossing.Data.Repositories
 
         public async Task<TEntity> GetAsync(Guid id, CancellationToken ct = default)
         {
-            var entity = DbContext.Set<TEntity>().FindAsync(id, ct);
+            var entity = DbContext.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, ct);
 
             return entity.Result;
         }
@@ -106,7 +106,7 @@ namespace Bookcrossing.Data.Repositories
         public async Task<TEntity> InsertAsync(TEntity newEntity, CancellationToken ct = default)
         {
             var entity = DbContext.Set<TEntity>().AddAsync(newEntity, ct);
-            SaveAsync(ct);
+            await SaveAsync(ct);
 
             return entity.Result.Entity;
         }
@@ -138,7 +138,6 @@ namespace Bookcrossing.Data.Repositories
                 .Take(parameters.PageSize)
                 .ToListAsync(ct).ConfigureAwait(false);
         }
-
 
         public async Task<TEntity> GetOneByCondition(Expression<Func<TEntity, bool>> expression, CancellationToken ct = default) =>
             DbContext.Set<TEntity>().FirstOrDefaultAsync(expression, ct).Result;

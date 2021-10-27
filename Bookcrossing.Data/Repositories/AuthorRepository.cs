@@ -28,7 +28,14 @@ namespace Bookcrossing.Data.Repositories
             entities = entities.Skip((parameters.PageNumber - 1) * parameters.PageSize)
                 .Take(parameters.PageSize);
 
-            return await entities.ToListAsync(ct).ConfigureAwait(false);
+            return await entities.ToListAsync(ct);
+        }
+
+        public async Task<long> GetCount(ParametersBase parameters, CancellationToken ct = default)
+        {
+            var entities = DbContext.Authors.Where(x => x.Name.Contains(parameters.SearchString));
+
+            return entities.Count();
         }
     }
 }
