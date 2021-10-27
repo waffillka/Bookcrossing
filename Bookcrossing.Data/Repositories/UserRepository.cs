@@ -14,12 +14,16 @@ namespace Bookcrossing.Data.Repositories
            : base(dbContext)
         { }
 
-        public async Task<User> GetByAuthIdAsync(Guid id, CancellationToken ct)
+        public async Task<User> GetByAuthIdAsync(Guid id, CancellationToken ct = default)
         {
             var entity = await DbContext.Users.FirstOrDefaultAsync(x => x.UserAuthId == id, ct);
             return entity;
         }
 
-
+        public async Task<User> GetByIdAsync(Guid id, CancellationToken ct = default)
+        {
+            var entity = await DbContext.Users.FirstOrDefaultAsync(x => x.Id == id, ct);
+            return entity;
+        }
     }
 }
