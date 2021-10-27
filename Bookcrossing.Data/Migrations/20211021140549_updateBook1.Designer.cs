@@ -4,14 +4,16 @@ using Bookcrossing.Data.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bookcrossing.Data.Migrations
 {
     [DbContext(typeof(BookcrossingDbContext))]
-    partial class BookcrossingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211021140549_updateBook1")]
+    partial class updateBook1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,6 +103,7 @@ namespace Bookcrossing.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("RecipientId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -241,7 +244,9 @@ namespace Bookcrossing.Data.Migrations
 
                     b.HasOne("Bookcrossing.Data.Entities.User", "Recipient")
                         .WithMany("BookRecipient")
-                        .HasForeignKey("RecipientId");
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Owner");
 

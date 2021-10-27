@@ -4,14 +4,16 @@ using Bookcrossing.Data.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bookcrossing.Data.Migrations
 {
     [DbContext(typeof(BookcrossingDbContext))]
-    partial class BookcrossingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211021144822_updateBook4")]
+    partial class updateBook4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
