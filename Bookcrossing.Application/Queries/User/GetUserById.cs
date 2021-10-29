@@ -17,13 +17,14 @@ namespace Bookcrossing.Application.Queries.User
             UserId = id;
         }
 
-        public Guid UserId { get; set; }
+        public Guid UserId { get; }
     }
 
     public class GetUserByIdHandler : BaseRequestHandler<GetUserById, UserDeteilsDto>
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+
         public GetUserByIdHandler(IUserRepository userRepository, IMapper mapper, ILoggerManager logger)
             : base(logger)
         {
@@ -34,8 +35,8 @@ namespace Bookcrossing.Application.Queries.User
         public override async Task<UserDeteilsDto> HandleInternalAsync(GetUserById request, CancellationToken ct)
         {
             var entity = await _userRepository.GetByIdAsync(request.UserId, ct);
-
-            return _mapper.Map<UserDeteilsDto>(entity);
+            var result = _mapper.Map<UserDeteilsDto>(entity);
+            return result;
         }
     }
 }

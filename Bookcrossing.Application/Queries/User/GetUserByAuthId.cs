@@ -17,7 +17,7 @@ namespace Bookcrossing.Application.Queries.User
             AuthId = id;
         }
 
-        public Guid AuthId { get; set; }
+        public Guid AuthId { get; }
     }
 
     public class GetUserByAuthIdHandler : BaseRequestHandler<GetUserByAuthId, UserDeteilsDto>
@@ -34,7 +34,7 @@ namespace Bookcrossing.Application.Queries.User
 
         public override async Task<UserDeteilsDto> HandleInternalAsync(GetUserByAuthId request, CancellationToken ct)
         {
-            var entity = await _userRepository.GetByIdAsync(request.AuthId, ct);
+            var entity = await _userRepository.GetByAuthIdAsync(request.AuthId, ct);
 
             return _mapper.Map<UserDeteilsDto>(entity);
         }
