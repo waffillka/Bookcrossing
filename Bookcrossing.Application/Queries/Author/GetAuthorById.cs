@@ -24,6 +24,7 @@ namespace Bookcrossing.Application.Queries.Author
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
+
         public GetAuthorByIdHandler(IAuthorRepository authorRepository, IMapper mapper, ILoggerManager logger)
             : base(logger)
         {
