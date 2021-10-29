@@ -1,12 +1,7 @@
 ﻿using Bookcrossing.Application.Queries.User;
-using Bookcrossing.Contracts.Context.TokenContext;
-using Bookcrossing.Contracts.DataTransferObjects.Deteils;
-using MassTransit.Mediator;
-using Microsoft.AspNetCore.Http;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Bookcrossing.Host.Controllers
@@ -21,12 +16,26 @@ namespace Bookcrossing.Host.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetbyId([FromQuery] Guid id)
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetbyId(Guid id)
         {
-            UserDeteilsDto entities = await _mediator.Send(new GetUserById(id));
+            var entities = await _mediator.Send(new GetUserById(id)).ConfigureAwait(false);
 
             return Ok(entities);
         }
+
+
+        [HttpGet("authId/{authId}")]
+        public async Task<IActionResult> GetbyAuthId(Guid authId)
+        {
+            var entities = await _mediator.Send(new GetUserByAuthId(authId));
+
+            return Ok(entities);
+        }
+
+        //recipient unlock
+        //recipient lock
+        //subcrabe 
+        //unsubcrabe
     }
 }
