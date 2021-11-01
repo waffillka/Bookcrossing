@@ -1,4 +1,6 @@
-﻿using Bookcrossing.Application.Queries.User;
+﻿using Bookcrossing.Application.Commands.User;
+using Bookcrossing.Application.Queries.User;
+using Bookcrossing.Contracts.Context.TokenContext;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,9 +13,12 @@ namespace Bookcrossing.Host.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public UserController(IMediator mediator)
+        private readonly IClientUserContext _clientUserContext;
+
+        public UserController(IMediator mediator, IClientUserContext clientUserContext)
         {
             _mediator = mediator;
+            _clientUserContext = clientUserContext;
         }
 
         [HttpGet("{Id}")]
@@ -33,9 +38,37 @@ namespace Bookcrossing.Host.Controllers
             return Ok(entities);
         }
 
-        //recipient unlock
-        //recipient lock
-        //subcrabe 
-        //unsubcrabe
+        [HttpPost("subscribe")]
+        public async Task<IActionResult> subscribe([FromBody] Guid bookId)
+        {
+            var result = await _mediator.Send(new SubscribeCommand(bookId, _clientUserContext.UserId));
+
+            return Ok(result);
+        }
+
+        [HttpPost("unsubscribe")]
+        public async Task<IActionResult> unsubscribe([FromBody] Guid bookId)
+        {
+
+            var result = await _mediator.Send(new UnsubscribeCommand(bookId, _clientUserContext.UserId));
+
+            return Ok(result);
+        }
+
+        [HttpPost("add-recipient")]
+        public async Task<IActionResult> AddRecipient([FromBody] Guid bookId)
+        {
+            var result = await _mediator.Send(new AddRecipient(bookId, _clientUserContext.UserId));
+
+            return Ok(result);
+        }
+
+        [HttpPost("remove-recipient")]
+        public async Task<IActionResult> RemoveRecipient([FromBody] Guid bookId)
+        {
+            var result = await _mediator.Send(new RemoveRecipient(bookId, _clientUserContext.UserId));
+
+            return Ok(result);
+        }
     }
 }
