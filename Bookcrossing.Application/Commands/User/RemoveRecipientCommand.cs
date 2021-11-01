@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Commands.User
 {
-    public class RemoveRecipient : IRequest<bool>
+    public class RemoveRecipientCommand : IRequest<bool>
     {
-        public RemoveRecipient(Guid bookId, Guid userId)
+        public RemoveRecipientCommand(Guid bookId, Guid userId)
         {
             BookId = bookId;
             UserId = userId;
@@ -20,7 +20,7 @@ namespace Bookcrossing.Application.Commands.User
         public Guid UserId { get; }
     }
 
-    public class RemoveRecipientHandler : BaseRequestHandler<RemoveRecipient, bool>
+    public class RemoveRecipientHandler : BaseRequestHandler<RemoveRecipientCommand, bool>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IUserRepository _userRepository;
@@ -37,7 +37,7 @@ namespace Bookcrossing.Application.Commands.User
             _userRepository = userRepository;
         }
 
-        public override async Task<bool> HandleInternalAsync(RemoveRecipient request, CancellationToken ct)
+        public override async Task<bool> HandleInternalAsync(RemoveRecipientCommand request, CancellationToken ct)
         {
             var book = await _bookRepository.GetAsync(request.BookId, ct);
             var user = await _userRepository.GetByAuthIdAsync(request.UserId, ct);

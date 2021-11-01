@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Commands.User
 {
-    public class AddRecipient : IRequest<bool>
+    public class AddRecipientCommand : IRequest<bool>
     {
-        public AddRecipient(Guid bookId, Guid userId)
+        public AddRecipientCommand(Guid bookId, Guid userId)
         {
             BookId = bookId;
             UserId = userId;
@@ -20,7 +20,7 @@ namespace Bookcrossing.Application.Commands.User
         public Guid UserId { get; }
     }
 
-    public class AddRecipientHandler : BaseRequestHandler<AddRecipient, bool>
+    public class AddRecipientHandler : BaseRequestHandler<AddRecipientCommand, bool>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IUserRepository _userRepository;
@@ -37,7 +37,7 @@ namespace Bookcrossing.Application.Commands.User
             _userRepository = userRepository;
         }
 
-        public override async Task<bool> HandleInternalAsync(AddRecipient request, CancellationToken ct)
+        public override async Task<bool> HandleInternalAsync(AddRecipientCommand request, CancellationToken ct)
         {
             var book = await _bookRepository.GetAsync(request.BookId, ct);
             var user = await _userRepository.GetByAuthIdAsync(request.UserId, ct);

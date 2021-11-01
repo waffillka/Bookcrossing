@@ -58,7 +58,7 @@ namespace Bookcrossing.Host.Controllers
         [HttpPost("add-recipient")]
         public async Task<IActionResult> AddRecipient([FromBody] Guid bookId)
         {
-            var result = await _mediator.Send(new AddRecipient(bookId, _clientUserContext.UserId));
+            var result = await _mediator.Send(new AddRecipientCommand(bookId, _clientUserContext.UserId));
 
             return Ok(result);
         }
@@ -66,7 +66,7 @@ namespace Bookcrossing.Host.Controllers
         [HttpPost("remove-recipient")]
         public async Task<IActionResult> RemoveRecipient([FromBody] Guid bookId)
         {
-            var result = await _mediator.Send(new RemoveRecipient(bookId, _clientUserContext.UserId));
+            var result = await _mediator.Send(new RemoveRecipientCommand(bookId, _clientUserContext.UserId));
 
             return Ok(result);
         }
