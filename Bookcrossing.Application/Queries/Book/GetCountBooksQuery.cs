@@ -31,7 +31,7 @@ namespace Bookcrossing.Application.Queries.Book
         public override async Task<long> HandleInternalAsync(GetCountBooksQuery request, CancellationToken cancellationToken)
         {
             var count = _bookRepository.GetCountAsync(request.Parameters, cancellationToken);
-            
+
 
             return count.Result;
         }

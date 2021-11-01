@@ -11,6 +11,6 @@ namespace Bookcrossing.Contracts.DataTransferObjects.Deteils
         public Guid UserAuthId { get; set; }
         public ICollection<BookLookUpDto> OwnerBook { get; set; }
         public ICollection<BookLookUpDto> BookRecipient { get; set; }
-        public  ICollection<BookLookUpDto> Subscribe { get; set; }
+        public ICollection<BookLookUpDto> Subscribe { get; set; }
     }
 }

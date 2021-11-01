@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Bookcrossing.Contracts.Abstractions.RequestFeatures
+﻿namespace Bookcrossing.Contracts.Abstractions.RequestFeatures
 {
     public class BookParams : ParametersBase
     {
