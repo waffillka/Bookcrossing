@@ -44,17 +44,13 @@ namespace Bookcrossing.Application.Commands.User
             var book = await _bookRepository.GetAsync(request.BookId, ct);
             var user = await _userRepository.GetByAuthIdAsync(request.UserId, ct);
 
-            if (book == default || user == default)
+            if (book == default || user == default || user.Subscribe.Contains(book))
             {
                 return false;
             }
 
-            if (!user.Subscribe.Contains(book))
-            {
-                user.Subscribe.Add(book);
-            }
-
-            _userRepository.SaveAsync(ct);
+            user.Subscribe.Add(book);
+            await _userRepository.SaveAsync(ct);
 
             var subscription = new Subscription()
             {
@@ -70,7 +66,8 @@ namespace Bookcrossing.Application.Commands.User
                 Authors = book.Authors.Select(x => x.Name).ToList()
             };
 
-            await _mediator.Send(new Broker.SubscribeCommand(subscription));
+            await _mediator.Send(new Broker.SubscribeBrokerCommand(subscription));
+            await _mediator.Send(new Broker.NotifyBrokerCommand(book.Id));
             return true;
         }
     }

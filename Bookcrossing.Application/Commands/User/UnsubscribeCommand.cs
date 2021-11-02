@@ -54,7 +54,7 @@ namespace Bookcrossing.Application.Commands.User
 
             _userRepository.SaveAsync(ct);
 
-            await _mediator.Send(new Broker.UnsubscribeCommand(user.Id, book.Id));
+            await _mediator.Send(new Broker.UnsubscribeBrokerCommand(user.Id, book.Id));
 
             return true;
         }

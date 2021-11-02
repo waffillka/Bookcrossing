@@ -9,35 +9,36 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Commands.Broker
 {
-    public class NotifyCommand : IRequest
+    public class UnsubscribeBrokerCommand : IRequest
     {
-        public NotifyCommand(Notification message)
+        public UnsubscribeBrokerCommand(Unsubscription message)
         {
             Message = message;
         }
 
-        public NotifyCommand(Guid bookId)
+        public UnsubscribeBrokerCommand(Guid userId, Guid bookId)
         {
-            Message = new Notification()
+            Message = new Unsubscription()
             {
+                UserId = userId,
                 BookId = bookId
             };
         }
 
-        public Notification Message { get; }
+        public Unsubscription Message { get; }
     }
 
-    public class NotificationCommandHandler : BaseRequestHandler<NotifyCommand, Unit>
+    public class UnsubscriptionBrokerCommandHandler : BaseRequestHandler<UnsubscribeBrokerCommand, Unit>
     {
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public NotificationCommandHandler(ILoggerManager logger, IPublishEndpoint publishEndpoint)
+        public UnsubscriptionBrokerCommandHandler(ILoggerManager logger, IPublishEndpoint publishEndpoint)
             : base(logger)
         {
             _publishEndpoint = publishEndpoint;
         }
 
-        public override async Task<Unit> HandleInternalAsync(NotifyCommand request, CancellationToken ct)
+        public override async Task<Unit> HandleInternalAsync(UnsubscribeBrokerCommand request, CancellationToken ct)
         {
             await _publishEndpoint.Publish(request.Message);
             return Unit.Value;

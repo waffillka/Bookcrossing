@@ -39,7 +39,7 @@ namespace Bookcrossing.Host.Controllers
         }
 
         [HttpPost("subscribe")]
-        public async Task<IActionResult> subscribe([FromBody] Guid bookId)
+        public async Task<IActionResult> Subscribe([FromQuery]Guid bookId)
         {
             var result = await _mediator.Send(new SubscribeCommand(bookId, _clientUserContext.UserId));
 
@@ -47,7 +47,7 @@ namespace Bookcrossing.Host.Controllers
         }
 
         [HttpPost("unsubscribe")]
-        public async Task<IActionResult> unsubscribe([FromBody] Guid bookId)
+        public async Task<IActionResult> Unsubscribe([FromBody] Guid bookId)
         {
 
             var result = await _mediator.Send(new UnsubscribeCommand(bookId, _clientUserContext.UserId));
@@ -70,5 +70,10 @@ namespace Bookcrossing.Host.Controllers
 
             return Ok(result);
         }
+    }
+
+    public class FuckingBody
+    {
+        public Guid BookId { get; set; }
     }
 }
