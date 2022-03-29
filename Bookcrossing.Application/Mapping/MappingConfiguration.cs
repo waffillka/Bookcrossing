@@ -22,12 +22,13 @@ namespace Bookcrossing.Application.Mapping
             CreateMap<PublisherCreationDto, Publisher>().ReverseMap();
 
             CreateMap<User, UserDeteilsDto>();
+            CreateMap<User, UserLookUpDto>();
 
             CreateMap<Book, BookDeteilsDto>();
             CreateMap<BookCreationDto, Book>().ReverseMap();
             CreateMap<Book, BookLookUpDto>().ForMember(c => c.Description,
                 opt => opt.MapFrom(
-                    x => x.Description.Length > 140 ? x.Description.Substring(0, 140) : x.Description));
+                    x => x.Description.Length > 50 ? x.Description.Substring(0, 50) : x.Description));
         }
     }
 }

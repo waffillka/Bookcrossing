@@ -20,10 +20,11 @@ namespace Bookcrossing.Application.Queries.Author
         public Guid AuthorId { get; }
     }
 
-    public class GetAuthorByIdHandler : LoggerRequestHandler<GetAuthorById, AuthorDeteilsDto>
+    public class GetAuthorByIdHandler : BaseRequestHandler<GetAuthorById, AuthorDeteilsDto>
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
+
         public GetAuthorByIdHandler(IAuthorRepository authorRepository, IMapper mapper, ILoggerManager logger)
             : base(logger)
         {

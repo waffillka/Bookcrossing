@@ -1,14 +1,22 @@
 using Bookcrossing.Application.Configuration;
 using Bookcrossing.Application.Logger;
+using Bookcrossing.Contracts.Context.TokenContext;
+using Bookcrossing.Contracts.Settings;
 using Bookcrossing.Data.Configuration;
+using Bookcrossing.Host.Filters;
 using Bookcrossing.Host.Middleware;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Bookcrossing.Host
 {
@@ -26,7 +34,9 @@ namespace Bookcrossing.Host
         {
             services.AddBookcrossingData(Configuration.GetConnectionString("sqlConnection"));
             services.AddBookcrossingApplication();
+            services.AddScoped<IClientUserContext, ClientUserContext>();
 
+            services.AddResponseCompression();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder =>
@@ -35,19 +45,62 @@ namespace Bookcrossing.Host
                 .AllowAnyHeader());
             });
 
+            services.AddControllers(opt =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                opt.Filters.Add(new AuthorizeFilter(policy));
+            }).AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            services.AddControllers(config => { })
-                    .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
-                    .AddXmlDataContractSerializerFormatters();
+            Authentication appSettings = GetAppSettings();
 
-            services.AddSwaggerGen(c =>
+            AddAuthenticationSettings(services, appSettings);
+
+            if (Configuration.GetValue<bool>("IsSwaggerEnabled"))// appSettings.IsSwaggerEnabled)
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bookcrossing", Version = "v1" });
-            });
+                services.AddSwaggerGen(options =>
+                {
+                    options.SchemaFilter<CustomExcludeJsonIgnoreFilter>();
+                    options.SwaggerDoc("v1", new OpenApiInfo()
+                    {
+                        Title = "Bookcrossing",
+                        Version = "v1"
+                    });
+
+                    options.EnableAnnotations();
+
+                    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                    {
+                        Description = "JWT Authorization header using the Bearer scheme.",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "Bearer"
+                    });
+
+                    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                                                                          {
+                                                                              {
+                                                                                  new OpenApiSecurityScheme
+                                                                                  {
+                                                                                      Reference = new OpenApiReference
+                                                                                                  {
+                                                                                                      Type = ReferenceType.SecurityScheme,
+                                                                                                      Id = "Bearer"
+                                                                                                  },
+                                                                                      Scheme = "oauth2",
+                                                                                      Name = "Bearer",
+                                                                                      In = ParameterLocation.Header
+                                                                                  },
+                                                                                  new List<string>()
+                                                                              }
+                                                                          });
+                });
+            }
 
         }
 
@@ -62,16 +115,43 @@ namespace Bookcrossing.Host
             }
 
             app.ConfigureExceptionHandler(logger);
-            app.UseHttpsRedirection();
-            app.UseCors("CorsPolicy");
+            app.UseCors(builder => builder
+                                 .AllowAnyOrigin()
+                                 .AllowAnyMethod()
+                                 .AllowAnyHeader());
+            app.UseAuthentication();
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.RegisteMiddleware();
+            app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void AddAuthenticationSettings(IServiceCollection services, Authentication authSettings)
+        {
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                    .AddIdentityServerAuthentication(options =>
+                    {
+                        options.Authority = "https://localhost:44310";// authSettings.Authority;
+                        options.RequireHttpsMetadata = false;//authSettings.RequireHttpsMetadata;
+                        options.ApiName = "BackEndApp_api"; // authSettings.Audience;
+                        options.SaveToken = true;
+
+                    });
+        }
+
+        private Authentication GetAppSettings()
+        {
+            Authentication appSettings = Configuration.Get<Authentication>();
+            if (appSettings == null)
+            {
+                throw new Exception("AppSettings are missing or incorrectly configured!");
+            }
+
+            return appSettings;
         }
     }
 }

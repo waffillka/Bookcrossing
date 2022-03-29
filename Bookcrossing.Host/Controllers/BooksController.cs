@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Host.Controllers
 {
-    [Route("books")]
+    [Route("api/[controller]")]
     [ApiController]
     public class BooksController : ControllerBase
     {
@@ -34,6 +34,14 @@ namespace Bookcrossing.Host.Controllers
             var result = await _mediator.Send(new GetBooksWithParametersQuery(parameters));
 
             return Ok(result);
+        }
+
+        [HttpGet("count")]
+        public async Task<IActionResult> GetCountBooks([FromQuery] BookParams parameters)
+        {
+            var count = await _mediator.Send(new GetCountBooksQuery(parameters));
+
+            return Ok(count);
         }
 
         [HttpDelete("delete/{id}")]

@@ -10,7 +10,7 @@ namespace Bookcrossing.Contracts.DataTransferObjects.Broker
         public string UserName { get; set; }
         public string UserNickname { get; set; }
         public string UserEmail { get; set; }
-        public DateTime SubscriptionDate { get; set; }
+        public DateTime SubscriptionDate { get; set; } = DateTime.Now;
         public Guid BookId { get; set; }
         public string BookName { get; set; }
         public string BookISBIN { get; set; }

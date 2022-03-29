@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Handler
 {
-    public abstract class LoggerRequestHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
+    public abstract class BaseRequestHandler<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         protected ILoggerManager _logger;
-        public LoggerRequestHandler(ILoggerManager logger)
+        public BaseRequestHandler(ILoggerManager logger)
         {
             _logger = logger;
         }

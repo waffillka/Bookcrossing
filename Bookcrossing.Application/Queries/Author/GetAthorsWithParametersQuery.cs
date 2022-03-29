@@ -21,7 +21,7 @@ namespace Bookcrossing.Application.Queries.Author
         public ParametersBase AuthorParams { get; }
     }
 
-    public class GetAthorsWithParametersQueryHandler : LoggerRequestHandler<GetAthorsWithParametersQuery, IReadOnlyCollection<AuthorLookUpDto>>
+    public class GetAthorsWithParametersQueryHandler : BaseRequestHandler<GetAthorsWithParametersQuery, IReadOnlyCollection<AuthorLookUpDto>>
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;

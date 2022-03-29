@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Bookcrossing.Data.Entities
 {
@@ -13,6 +14,7 @@ namespace Bookcrossing.Data.Entities
 
         public string Nickname { get; set; }
         public string Email { get; set; }
+        public Guid UserAuthId { get; set; }
         public virtual ICollection<Book> OwnerBook { get; set; }
         public virtual ICollection<Book> BookRecipient { get; set; }
         public virtual ICollection<Book> Subscribe { get; set; }

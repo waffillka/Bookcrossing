@@ -101,7 +101,6 @@ namespace Bookcrossing.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("RecipientId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -186,6 +185,9 @@ namespace Bookcrossing.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserAuthId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
@@ -239,9 +241,7 @@ namespace Bookcrossing.Data.Migrations
 
                     b.HasOne("Bookcrossing.Data.Entities.User", "Recipient")
                         .WithMany("BookRecipient")
-                        .HasForeignKey("RecipientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RecipientId");
 
                     b.Navigation("Owner");
 

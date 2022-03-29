@@ -21,7 +21,7 @@ namespace Bookcrossing.Application.Queries.Publisher
         public ParametersBase Params { get; }
     }
 
-    public class GetPublishersWithParametersQueryHandler : LoggerRequestHandler<GetPublishersWithParametersQuery, IReadOnlyCollection<PublisherLookUpDto>>
+    public class GetPublishersWithParametersQueryHandler : BaseRequestHandler<GetPublishersWithParametersQuery, IReadOnlyCollection<PublisherLookUpDto>>
     {
         private readonly IPublisherRepository _publisherRepository;
         private readonly IMapper _mapper;

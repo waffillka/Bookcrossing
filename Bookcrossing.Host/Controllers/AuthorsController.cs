@@ -1,23 +1,27 @@
 ﻿using Bookcrossing.Application.Commands.Author;
 using Bookcrossing.Application.Queries.Author;
 using Bookcrossing.Contracts.Abstractions.RequestFeatures;
+using Bookcrossing.Contracts.Context.TokenContext;
 using Bookcrossing.Contracts.DataTransferObjects.Creation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace Bookcrossing.Host.Controllers
 {
-    [Route("author")]
+    [Authorize]
+    [Route("api/[controller]")]
     [ApiController]
     public class AuthorsController : ControllerBase
     {
         private readonly IMediator _mediator;
-
-        public AuthorsController(IMediator mediator)
+        private readonly IClientUserContext _clientUserContext;
+        public AuthorsController(IMediator mediator, IClientUserContext clientUserContext)
         {
             _mediator = mediator;
+            _clientUserContext = clientUserContext;
         }
 
         [HttpPost("create")]
@@ -40,6 +44,14 @@ namespace Bookcrossing.Host.Controllers
             var entities = await _mediator.Send(new GetAthorsWithParametersQuery(parameters));
 
             return Ok(entities);
+        }
+
+        [HttpGet("count")]
+        public async Task<IActionResult> GetCountAuthors([FromQuery] ParametersBase parameters)
+        {
+            var count = await _mediator.Send(new GetCountAuthorsQuery(parameters));
+
+            return Ok(count);
         }
 
         [HttpGet("{id}")]

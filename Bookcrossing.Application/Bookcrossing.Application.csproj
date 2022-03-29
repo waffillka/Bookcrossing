@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Bookcrossing.Data\Bookcrossing.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Commands\User\" />
-  </ItemGroup>
-
 </Project>

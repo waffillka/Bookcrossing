@@ -25,7 +25,6 @@ namespace Bookcrossing.Host.Middleware
 
                         switch (contextFeature.Error)
                         {
-
                             default:
                                 {
                                     await context.Response.WriteAsync(new ErrorDetails()

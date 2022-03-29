@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Bookcrossing.Application.Commands.Broker
 {
-    public class NotifyCommand : IRequest
+    public class NotifyBrokerCommand : IRequest
     {
-        public NotifyCommand(Notification message)
+        public NotifyBrokerCommand(Notification message)
         {
             Message = message;
         }
 
-        public NotifyCommand(Guid bookId)
+        public NotifyBrokerCommand(Guid bookId)
         {
             Message = new Notification()
             {
@@ -27,17 +27,17 @@ namespace Bookcrossing.Application.Commands.Broker
         public Notification Message { get; }
     }
 
-    public class NotificationCommandHandler : LoggerRequestHandler<NotifyCommand, Unit>
+    public class NotificationBrokerCommandHandler : BaseRequestHandler<NotifyBrokerCommand, Unit>
     {
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public NotificationCommandHandler(ILoggerManager logger, IPublishEndpoint publishEndpoint)
+        public NotificationBrokerCommandHandler(ILoggerManager logger, IPublishEndpoint publishEndpoint)
             : base(logger)
         {
             _publishEndpoint = publishEndpoint;
         }
 
-        public override async Task<Unit> HandleInternalAsync(NotifyCommand request, CancellationToken ct)
+        public override async Task<Unit> HandleInternalAsync(NotifyBrokerCommand request, CancellationToken ct)
         {
             await _publishEndpoint.Publish(request.Message);
             return Unit.Value;

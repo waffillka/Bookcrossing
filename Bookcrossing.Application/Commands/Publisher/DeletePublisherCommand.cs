@@ -18,7 +18,7 @@ namespace Bookcrossing.Application.Commands.Publisher
         public Guid Id { get; }
     }
 
-    public class DeletePublisherCommandHandler : LoggerRequestHandler<DeletePublisherCommand, Unit>
+    public class DeletePublisherCommandHandler : BaseRequestHandler<DeletePublisherCommand, Unit>
     {
         private IPublisherRepository _publisherRepository;
 
